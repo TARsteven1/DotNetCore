@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HelloWPF"
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
-		xmlns:control="clr-namespace:ControlLibrary;assembly=ControlLibrary"
+		xmlns:control="clr-namespace:WpfControlLibrary;assembly=WpfControlLibrary"
         mc:Ignorable="d"
         Title="WPF" Height="267" Width="304" WindowStyle="ToolWindow">
 	<Window.Resources>
@@ -73,7 +73,7 @@
 						<ColumnDefinition>
 						</ColumnDefinition>
 					</Grid.ColumnDefinitions>-->
-					<control:SalaryCalculator />
+					<control:Calculator/>
 					<!--<control:SalaryCalculator Grid.Column="0" Grid.Row="0"/>-->
 					<!--<control:SalaryCalculator Grid.Column="0" Grid.Row="1"/>
 					<control:SalaryCalculator Grid.Column="1" Grid.Row="0"/>
