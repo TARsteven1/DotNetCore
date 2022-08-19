@@ -20,6 +20,7 @@ namespace WpfAppBasical
     /// </summary>
     public partial class MainWindow : Window
     {
+        Model model = new Model();
         public MainWindow()
         {
             InitializeComponent();
@@ -48,6 +49,22 @@ namespace WpfAppBasical
             tests.Add(new Test() { Code = "4" });
             tests.Add(new Test() { Code = "6" });
             ic.ItemsSource = tests;
+
+            BindingTxt.DataContext = new Student { UserName="tar"};
+            //设置Window的数据上下文
+ 
+            this.DataContext = model;
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            txt.Text = e.NewValue.ToString();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            model.Code = "org";
+
         }
     }
     public class Student

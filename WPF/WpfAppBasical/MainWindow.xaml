@@ -65,6 +65,7 @@
 				<TextBlock Text="{Binding Code}" Margin="5,0"/>
 			</StackPanel>
 		</DataTemplate>
+		<TextBox x:Key="txt"	>------分割线--------</TextBox>
 	</Window.Resources>
 	<StackPanel Background="LightBlue">
 		<TabControl Height="420" Margin="0,0,-0.4,0" >
@@ -171,6 +172,25 @@
 							</ItemsControl>
 						</WrapPanel>
 					</Border>
+				</Grid>
+			</TabItem>
+			<TabItem Header="数据模版">
+				<Grid>
+					<StackPanel	>
+					<!--事件驱动-->
+						<Slider Width="200" ValueChanged="Slider_ValueChanged" />
+						<TextBox FontSize="30" Height="30" Name="txt"/>
+						<!--数据驱动-->
+						<Slider Width="200" x:Name="sd" />
+						<TextBox Background="Pink" FontSize="30" Height="30" Text="{Binding ElementName=sd ,Path=Value}"/>
+						<!--绑定数据源-->
+						<TextBox Text="{Binding Source={StaticResource txt},Path=Text}"/>
+						<!--使用DataContext绑定数据-->
+						<TextBox x:Name="BindingTxt" Text="{Binding UserName,FallbackValue='Not Found'}"/>
+
+						<TextBox Text="{Binding Code ,UpdateSourceTrigger=PropertyChanged}"/>
+						<Button Command="{Binding command}" Content="修改数据" Width="200"/>
+					</StackPanel>
 				</Grid>
 			</TabItem>
 		</TabControl>
