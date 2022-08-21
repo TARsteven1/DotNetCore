@@ -12,6 +12,14 @@ namespace WpfApp1.Models
     {
         private int id;
         private string name;
+        //private string  changedname;
+
+        //public string  ChangedName
+        //{
+        //    get { return changedname; }
+        //    set { changedname = value; }
+        //}
+
 
         public string Name
         {

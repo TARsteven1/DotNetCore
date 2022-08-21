@@ -19,8 +19,8 @@
 			<TextBlock Text="搜索条件："   VerticalAlignment="Center"/>
 			<TextBox Width="200" Height="25" Text="{Binding Search}" Margin="10 0 0 0"/>
 			<Button Content="find" Command="{Binding QueryCommand}" Width=" 70" Height="25" Margin="10 0 0 0"/>
-			<Button Content="reset" Width=" 70" Height="25" Margin="10 0 0 0"/>
-			<Button Content="add" Width=" 70" Height="25" Margin="10 0 0 0"/>
+			<Button Content="reset" Command="{Binding ResetCommand}" Width=" 70" Height="25" Margin="10 0 0 0"/>
+			<Button Content="add" Command="{Binding AddCommand}" Width=" 70" Height="25" Margin="10 0 0 0"/>
 		</StackPanel>
 		<DataGrid ColumnWidth="*"  AutoGenerateColumns="False" CanUserAddRows="False" ItemsSource="{Binding GirdModelList}" Margin="0,71,0.333,-360.333">
 			<DataGrid.Columns>
@@ -30,8 +30,8 @@
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
-								<Button Content="修改" Width="60" Height="25" Background="White" Foreground="Black"/>
-								<Button Content="删除" Width="60" Height="25" Background="Red" Foreground="White"/>
+								<Button Content="修改" CommandParameter="{Binding ID}" Command="{Binding DataContext.EditCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" Width="60" Height="25" Background="White" Foreground="Black"/>
+								<Button Content="删除" Width="60" CommandParameter="{Binding ID}" Command="{Binding DataContext.DelCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" Height="25" Background="Red" Foreground="White"/>
 							</StackPanel>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>

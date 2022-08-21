@@ -42,6 +42,17 @@ namespace WpfApp1.DB
         {
             return students.Where(q => q.Name.Contains(name)).ToList();
         }
+        public Student FindDataByID(int  id)
+        {
+            var model = students.FirstOrDefault(t => t.ID == id);
+            if (model != null)
+            {
+                return new Student() { /*ID = model.ID,*/ Name = model.Name };
+            }
+            return null;
+
+            //  return students.FirstOrDefault(t => t.ID==id);
+        }
     }
 
 }
