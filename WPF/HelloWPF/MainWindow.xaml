@@ -5,16 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HelloWPF"
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
-		xmlns:control="clr-namespace:WpfControlLibrary;assembly=WpfControlLibrary"
+		xmlns:control="clr-namespace:Calculator;assembly=Calculator"
+		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+		xmlns:dr="http://schemas.microsoft.com/expression/2010/interactions"
+		xmlns:load="clr-namespace:Indicator;assembly=Indicator"
         mc:Ignorable="d"
-        Title="WPF" Height="267" Width="304" WindowStyle="ToolWindow">
+        Title="WPF" Height="267" Width="304" WindowStyle="None">
 	<Window.Resources>
 		<local:Human x:Key="human" Name="Tar"/>
 		<sys:String x:Key="stringHello">Hello WPF!
 		</sys:String>
 	</Window.Resources>
 	<StackPanel Background="LightBlue">
-		<TabControl Height="180">
+		<i:Interaction.Behaviors>
+			<dr:MouseDragElementBehavior x:Name="DragRectangle" Dragging="DragRectangle_Dragging" DragFinished="DragRectangle_DragFinished"/>
+		</i:Interaction.Behaviors>
+		<TabControl Height="254">
 			<TabItem Header="Start">
 				<Grid Background="#FFE5E5E5" Height="123">
 					<TextBox Text="TextBox" TextWrapping="Wrap" Margin="0,0,174,68"/>
@@ -78,6 +84,22 @@
 					<!--<control:SalaryCalculator Grid.Column="0" Grid.Row="1"/>
 					<control:SalaryCalculator Grid.Column="1" Grid.Row="0"/>
 					<control:SalaryCalculator Grid.Column="1" Grid.Row="1"/>-->
+				</Grid>
+			</TabItem>
+			<TabItem Header="Loading" >
+				<local:Indicator VerticalAlignment="Center" HorizontalAlignment="Center"/>
+			</TabItem>
+			<TabItem Header="Loaded" >
+				<load:Indicator VerticalAlignment="Center" HorizontalAlignment="Center"/>
+			</TabItem>
+			<TabItem Header="Drag" >
+				<Grid>
+					<Rectangle Width="200" Height="120" Fill="Blue" >
+					<i:Interaction.Behaviors>
+						<dr:MouseDragElementBehavior/>
+							<dr:MouseDragElementBehavior/>
+						</i:Interaction.Behaviors>
+				</Rectangle>
 				</Grid>
 			</TabItem>
 		</TabControl>

@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WpfControlLibrary\WpfControlLibrary.csproj" />
+    <PackageReference Include="Blend.Interactivity.Wpf" Version="1.0.1340" />
+    <PackageReference Include="Microsoft.SDK.Expression.Blend" Version="1.0.0" />
+    <PackageReference Include="MicrosoftExpressionInteractions" Version="3.0.40218" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UserControls\Calculator\Calculator.csproj" />
+    <ProjectReference Include="..\UserControls\Indicator\Indicator.csproj" />
   </ItemGroup>
 
 </Project>
