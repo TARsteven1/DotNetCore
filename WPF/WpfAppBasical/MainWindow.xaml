@@ -81,6 +81,7 @@
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition/>
 						<ColumnDefinition Width="2*"/>
+						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 					<Border Background="Red">
 						<!--StackPanel: 水平或垂直排列元素、Orientation属性分别: Horizontal / Vertical-->
@@ -106,6 +107,18 @@
 							<Button Width="100" Height="20"/>
 						</WrapPanel>
 					</Border>
+					<Border Background="Black" Grid.Column="2" Grid.Row="1">
+						<!--UniformGrid:按照固定行列均匀排布元素-->
+						<UniformGrid Columns=" 3" Rows="2">
+							<Button Width="100" Height="20"/>
+							<Button Width="100" Height="20"/>
+							<Button Width="100" Height="20"/>
+							<Button Width="100" Height="20"/>
+							<Button Width="100" Height="20"/>
+							<Button Width="100" Height="20"/>
+							<Button Width="100" Height="20"/>
+						</UniformGrid>
+					</Border>	
 				</Grid>
 			</TabItem>
 			<TabItem Header="样式&amp;触发器">
