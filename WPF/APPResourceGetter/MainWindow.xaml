@@ -1,0 +1,17 @@
+﻿<Window x:Class="APPResourceGetter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:APPResourceGetter"
+        mc:Ignorable="d"
+        Title="APPResourceGetter" Height="450" Width="800">
+	<Grid>
+
+		<Button Width="150" Height="30" Content=" Open" Click="OnGetResource" Margin="130,84,513.6,307.6" />
+		<TextBlock Height=" 30" Text="{Binding TargetFilePath}" Margin="331,84,125.6,307.6" Background="LightGray"/>
+		<Button Width="150" Height="30" Content=" Out" Click="OnGetResource" Margin="130,178,513.6,213.6" />
+		<TextBlock Height=" 30" Text="{Binding OutPath}" Margin="331,178,125.6,213.6" Background="LightGray" />
+		<Button Width="150" Height="30" Content=" Get" Click="OnGetResource" Margin="309,317,334.6,74.6"/>
+	</Grid>
+</Window>
