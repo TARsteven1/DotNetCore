@@ -40,16 +40,35 @@
 				</MultiTrigger>
 			</Style.Triggers>
 		</Style>
+		<Style x:Key="DataTriggerStyle" TargetType="TextBox" >
+			<!--DataTrigger : 监测依赖数据的变化、触发器生效-->
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=Text}" Value="ok">
+					<Setter Property="Background" Value="GreenYellow"/>
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
 		<Style x:Key="EventTriggerStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource defaultBaseStyle}">
 			<Style.Triggers>
 				<EventTrigger RoutedEvent="Mouse.MouseEnter">
-					<BeginStoryboard>
-						<Storyboard>
-							<DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="FontSize" To="10"/>
-						</Storyboard>
-					</BeginStoryboard>
-					<StopStoryboard/>
+					<EventTrigger.Actions>
+						<BeginStoryboard Name="FontAnim">
+							<Storyboard>
+								<DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="FontSize" To="10"></DoubleAnimation>
+							</Storyboard>
+						</BeginStoryboard>
+					</EventTrigger.Actions>
+				</EventTrigger>				
+           <EventTrigger RoutedEvent="Mouse.MouseLeave">
+					<EventTrigger.Actions>
+						<BeginStoryboard Name="FontAnimre">
+							<Storyboard>
+								<DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="FontSize" To="30"></DoubleAnimation>
+							</Storyboard>
+						</BeginStoryboard>
+					</EventTrigger.Actions>
 				</EventTrigger>
+				
 			</Style.Triggers>
 		</Style>
 		<!--自定义控件模板-->
@@ -118,14 +137,20 @@
 							<Button Width="100" Height="20"/>
 							<Button Width="100" Height="20"/>
 						</UniformGrid>
-					</Border>	
+					</Border>
 				</Grid>
 			</TabItem>
 			<TabItem Header="样式&amp;触发器">
 				<StackPanel>
-					<Button Style="{StaticResource defaultFirstStyle}"  Content="hel" Width="100" Height="40"/>
+					<Button Style="{StaticResource defaultFirstStyle}"   Width="100" Height="40">
+						<Button.Content>
+							<TextBlock Text="hel"></TextBlock>
+						</Button.Content>
+					</Button>
 					<Button Style="{StaticResource TriggerStyle}" Foreground="Red" Content="hel" Width="100" Height="40"/>
 					<Button  Style="{StaticResource EventTriggerStyle}"    Foreground="Pink" Content="hel" Width="100" Height="40" Template="{DynamicResource TarButtonTemplate}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+					<TextBox Style="{StaticResource DataTriggerStyle}"   Width="100" Height="40" Margin="342,0"/>
+					<Button Style="{StaticResource EventTriggerStyle}"  Content="hel" Width="100" Height="40"/>
 				</StackPanel>
 			</TabItem>
 			<TabItem Header="数据模版">
@@ -138,34 +163,34 @@
 					</Grid.RowDefinitions>
 					<Border Background="Red">
 
-					<WrapPanel Orientation="Vertical" >
-						<TextBlock Text="CellTemplate->" Height="20" Width="200" HorizontalAlignment="Left"/>
-						<DataGrid Name="gd" AutoGenerateColumns="False" CanUserSortColumns="True"  CanUserAddRows="False">
-							<DataGrid.Columns>
-								<DataGridTextColumn Binding="{Binding UserName}" Width="100" Header="学生姓名"/>
-								<DataGridTextColumn Binding="{Binding ClassName}" Width="100" Header="班级名称"/>
-								<DataGridTextColumn Binding="{Binding Address}" Width="200" Header="地址"/>
-								<DataGridTemplateColumn Header="操作" Width="100" >
-									<DataGridTemplateColumn.CellTemplate>
-										<DataTemplate>
-											<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-												<Button Content="编辑"/>
-												<Button Margin="8 0 0 0" Content="删除" />
-											</StackPanel>
-										</DataTemplate>
-									</DataGridTemplateColumn.CellTemplate>
-								</DataGridTemplateColumn>
-							</DataGrid.Columns>
-						</DataGrid>
-						<TextBlock Height="20"/>
-					</WrapPanel>
+						<WrapPanel Orientation="Vertical" >
+							<TextBlock Text="CellTemplate->" Height="20" Width="200" HorizontalAlignment="Left"/>
+							<DataGrid Name="gd" AutoGenerateColumns="False" CanUserSortColumns="True"  CanUserAddRows="False">
+								<DataGrid.Columns>
+									<DataGridTextColumn Binding="{Binding UserName}" Width="100" Header="学生姓名"/>
+									<DataGridTextColumn Binding="{Binding ClassName}" Width="100" Header="班级名称"/>
+									<DataGridTextColumn Binding="{Binding Address}" Width="200" Header="地址"/>
+									<DataGridTemplateColumn Header="操作" Width="100" >
+										<DataGridTemplateColumn.CellTemplate>
+											<DataTemplate>
+												<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+													<Button Content="编辑"/>
+													<Button Margin="8 0 0 0" Content="删除" />
+												</StackPanel>
+											</DataTemplate>
+										</DataGridTemplateColumn.CellTemplate>
+									</DataGridTemplateColumn>
+								</DataGrid.Columns>
+							</DataGrid>
+							<TextBlock Height="20"/>
+						</WrapPanel>
 					</Border>
 					<Border Background="Yellow" Grid.Row="1">
 						<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-						<TextBlock Text="ItemTemplate->" Height="20" Width="200" HorizontalAlignment="Stretch"/>
+							<TextBlock Text="ItemTemplate->" Height="20" Width="200" HorizontalAlignment="Stretch"/>
 							<ComboBox Name="cob" Width="120" Height="20" ItemTemplate="{StaticResource comTemplate}"/>
-						<ListBox Name="lib" Width="120" Height="100" Margin="5,0"  ItemTemplate="{StaticResource comTemplate}"/>
-					</StackPanel>
+							<ListBox Name="lib" Width="120" Height="100" Margin="5,0"  ItemTemplate="{StaticResource comTemplate}"/>
+						</StackPanel>
 					</Border>
 					<Border Background="Green" Grid.Row="2">
 						<WrapPanel>
@@ -187,10 +212,10 @@
 					</Border>
 				</Grid>
 			</TabItem>
-			<TabItem Header="数据模版">
+			<TabItem Header="数据绑定">
 				<Grid>
 					<StackPanel	>
-					<!--事件驱动-->
+						<!--事件驱动-->
 						<Slider Width="200" ValueChanged="Slider_ValueChanged" />
 						<TextBox FontSize="30" Height="30" Name="txt"/>
 						<!--数据驱动-->
