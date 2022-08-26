@@ -24,6 +24,8 @@ namespace WpfAppBasical
         public MainWindow()
         {
             InitializeComponent();
+
+            #region 数据模版测试数据
             List<Student> students = new List<Student>();
             students.Add(new Student() { UserName = "小王", ClassName = "高二三班", Address = "广州市" });
             students.Add(new Student() { UserName = "小李", ClassName = "高三六班", Address = "清远市" });
@@ -49,6 +51,7 @@ namespace WpfAppBasical
             tests.Add(new Test() { Code = "4" });
             tests.Add(new Test() { Code = "6" });
             ic.ItemsSource = tests;
+            #endregion
 
             BindingTxt.DataContext = new Student { UserName="tar"};
             //设置Window的数据上下文
