@@ -274,7 +274,7 @@
 						<!--事件驱动-->
 						<Slider Width="200" ValueChanged="Slider_ValueChanged" />
 						<TextBox FontSize="30" Height="30" Name="txt"/>
-						<!--数据驱动-->
+						<!--数据驱动(元素绑定)-->
 						<Slider Width="200" x:Name="sd" />
 						<TextBox Background="Pink" FontSize="30" Height="30" Text="{Binding ElementName=sd ,Path=Value}"/>
 						<!--绑定数据源-->
