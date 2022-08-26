@@ -1,0 +1,119 @@
+﻿<Window x:Class="ToDoList_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToDoList_WPF" xmlns:viewmodel="clr-namespace:ToDoList_WPF.ViewModel"
+		xmlns:ti="clr-namespace:ToDoList_WPF.Models"
+		mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="1000" WindowStyle="None">
+	<Window.DataContext>
+		<viewmodel:MainViewModel/>
+	</Window.DataContext>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="210"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<DockPanel LastChildFill="True">
+			<TextBlock Text="Microsoft ToDo" Margin="10 10 0 20" DockPanel.Dock="Top" Foreground="#FF737373"/>
+			<DockPanel DockPanel.Dock="Top" LastChildFill="False" Margin="0 10">
+				<Image Source="Logo.jpg" Width="30" Height="30" Margin="10 10 0 0" Cursor="Wait"/>
+				<TextBlock Text="TAR" VerticalAlignment="Center" Margin="10 10 0 0"/>
+				<TextBlock Text="&#xe645;" FontFamily="./Fonts/#iconfont" Margin="0 0 10 0" VerticalAlignment="Center" DockPanel.Dock="Right" FontSize="22"/>
+			</DockPanel>
+			<ListBox BorderThickness="0" ItemsSource="{Binding MenuItems}">
+				<ListBox.ItemContainerStyle>
+					<Style TargetType="ListBoxItem" >
+						<Setter Property="HorizontalAlignment" Value="Stretch"/>
+						<Setter Property="Height" Value="45"/>
+						<Setter Property="Margin" Value="0 2 0 0"/>
+						<Setter Property="Template">
+							<Setter.Value>
+								<ControlTemplate TargetType="ListBoxItem">
+									<Grid>
+										<Border x:Name="bd1"/>
+										<Border x:Name="bd2"/>
+										<ContentPresenter/>
+									</Grid>
+									<ControlTemplate.Triggers>
+										<Trigger Property="IsMouseOver" Value="True">
+											<Setter  TargetName="bd1" Property="Background" Value="#FFF5F4F4"/>
+										</Trigger>
+										<Trigger Property="IsSelected" Value="True">
+											<Setter   Property="FontWeight" Value="Bold"/>
+											<Setter Property="Foreground" Value="{Binding BackColor}"/>
+											<Setter  TargetName="bd1" Property="Background" Value="{Binding BackColor}"/>
+											<Setter  TargetName="bd1" Property="Opacity" Value="0.1"/>
+											<Setter TargetName="bd2" Property="BorderThickness" Value="2,0,0,0"/>
+											<Setter TargetName="bd2" Property="BorderBrush" Value="{Binding BackColor}"/>
+										</Trigger>
+										<EventTrigger RoutedEvent="Mouse.MouseEnter">
+											<EventTrigger.Actions>
+												
+											</EventTrigger.Actions>
+										</EventTrigger>
+									</ControlTemplate.Triggers>
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+					</Style>
+				</ListBox.ItemContainerStyle>
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<DockPanel LastChildFill="False" Margin="10 0 0 0">
+							<TextBlock Text="{Binding Icon}" Style="{StaticResource IconTextBlockStyle}" />
+							<TextBlock Text="{Binding Name}"  Margin="0 0 10 0" VerticalAlignment="Center" FontSize="14"/>
+							<TextBlock Text="{Binding Count}" DockPanel.Dock="Right" Margin="0 0 10 0" VerticalAlignment="Center" FontWeight="Light"/>
+						</DockPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+				<!--<RadioButton>
+					<DockPanel LastChildFill="False" Margin="10 0 0 0">
+						<TextBlock Text="&#xe635;" Style="{StaticResource IconTextBlockStyle}"/>
+						<TextBlock Text="我的一天" VerticalAlignment="Center"/>
+						<TextBlock Text="1" DockPanel.Dock="Right" Margin="0 0 10 0" VerticalAlignment="Center"/>
+					</DockPanel>
+				</RadioButton>
+				<RadioButton>
+					<DockPanel LastChildFill="False" Margin="10 0 0 0">
+						<TextBlock Text="&#xe6b6;" Style="{StaticResource IconTextBlockStyle}"/>
+						<TextBlock Text="重要的" VerticalAlignment="Center"/>
+						<TextBlock Text="1" DockPanel.Dock="Right" Margin="0 0 10 0" VerticalAlignment="Center"/>
+					</DockPanel>
+				</RadioButton>
+				<RadioButton>
+					<DockPanel LastChildFill="False" Margin="10 0 0 0">
+						<TextBlock Text="&#xe6e1;" Style="{StaticResource IconTextBlockStyle}"/>
+						<TextBlock Text="已计划日程" VerticalAlignment="Center"/>
+						<TextBlock Text="1" DockPanel.Dock="Right" Margin="0 0 10 0" VerticalAlignment="Center"/>
+					</DockPanel>
+				</RadioButton>
+				<RadioButton>
+					<DockPanel LastChildFill="False" Margin="10 0 0 0">
+						<TextBlock Text="&#xe614;" Style="{StaticResource IconTextBlockStyle}"/>
+						<TextBlock Text="已分配给你" VerticalAlignment="Center"/>
+						<TextBlock Text="1" DockPanel.Dock="Right" Margin="0 0 10 0" VerticalAlignment="Center"/>
+					</DockPanel>
+				</RadioButton>
+				<RadioButton>
+					<DockPanel LastChildFill="False" Margin="10 0 0 0">
+						<TextBlock Text="&#xe755;" Style="{StaticResource IconTextBlockStyle}"/>
+						<TextBlock Text="任务" VerticalAlignment="Center"/>
+						<TextBlock Text="1" DockPanel.Dock="Right" Margin="0 0 10 0" VerticalAlignment="Center"/>
+					</DockPanel>
+				</RadioButton>-->
+			</ListBox>
+		</DockPanel>
+		<!--TODO:完成右边的主视图布局和逻辑-->
+		<!--添加listItem子项功能-->
+		<Border  x:Name="RightPart"  Background="{Binding Color}"  Grid.Column="1" >
+			<!--<Border.DataContext>
+				<ti:TaskItem/>
+			</Border.DataContext>-->
+				<DockPanel LastChildFill="False" >
+					
+				</DockPanel>
+		</Border>
+	</Grid>
+</Window>
