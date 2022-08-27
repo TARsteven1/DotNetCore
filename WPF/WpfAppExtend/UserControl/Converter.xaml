@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="WpfAppExtend.UserControl.Converter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfAppExtend.UserControl" 
+			 xmlns:class="clr-namespace:WpfAppExtend.Class" 
+			 xmlns:class1="clr-namespace:WpfAppExtend.Class.Converter"
+			 mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+	<UserControl.Resources>
+		<class:IDisplayConverter x:Key="dis"/>
+		<class1:IMultiDisplayValueConverter x:Key="dism"/>
+	</UserControl.Resources>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<StackPanel>
+			<TextBlock Text="0" Name="t1" FontSize="50"/>
+			<TextBlock  FontSize="50" Text="{Binding Path=Text, ElementName=t1,Converter={StaticResource dis}}">
+			</TextBlock>
+		</StackPanel>
+		<StackPanel Grid.Column="1" Orientation="Vertical" >
+			<Slider Name="silder_r" Minimum="0" Maximum="255" Width="200" Margin="10"/>
+			<Slider Name="silder_g" Minimum="0" Maximum="255" Width="200" Margin="10"/>
+			<Slider Name="silder_b" Minimum="0" Maximum="255" Width="200" Margin="10"/>
+			<Path HorizontalAlignment="Center" >
+				<Path.Data>
+					<EllipseGeometry  Center="100,100" RadiusX="50" RadiusY="50" />
+				</Path.Data>
+				<!--多值绑定，圆形内的rgb颜色值-->
+				<Path.Fill>
+					<MultiBinding Converter="{StaticResource dism}" >
+						<Binding ElementName ="silder_r" Path="Value"/>
+						<Binding ElementName ="silder_g" Path="Value"/>
+						<Binding ElementName ="silder_b" Path="Value"/>
+					</MultiBinding>
+				</Path.Fill>
+			</Path>
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+				<TextBlock Width="100" Height="30" Foreground="Red" FontSize="20" Margin="30 0 20 0" >
+					<TextBlock.Text>
+						<Binding ElementName ="silder_r" Path="Value"/>
+					</TextBlock.Text>
+				</TextBlock>
+				<TextBlock Width="100" Height="30" Foreground="Green" FontSize="20" Margin="30 0 20 0">
+					<TextBlock.Text>
+						<Binding ElementName ="silder_g" Path="Value"/>
+					</TextBlock.Text>
+				</TextBlock>
+				<TextBlock Width="100" Height="30" Foreground="Blue" FontSize="20" Margin="30 0 20 0" >
+					<TextBlock.Text>
+						<Binding ElementName ="silder_b" Path="Value"/>
+					</TextBlock.Text>
+				</TextBlock>
+			</StackPanel>
+		</StackPanel>
+	</Grid>
+</UserControl>
