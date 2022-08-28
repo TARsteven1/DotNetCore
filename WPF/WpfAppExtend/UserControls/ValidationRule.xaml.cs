@@ -12,17 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfAppExtend.ViewModel;
 
-namespace WpfAppExtend.UserControl
+namespace WpfAppExtend.UserControls
 {
     /// <summary>
-    /// Behavior.xaml 的交互逻辑
+    /// ValidationRule.xaml 的交互逻辑
     /// </summary>
-    public partial class Behavior /*: UserControl*/
+    public partial class ValidationRule : UserControl
     {
-        public Behavior()
+
+
+        public ValidationRule()
         {
             InitializeComponent();
+            this.DataContext = new MainViewModel();
         }
     }
 }

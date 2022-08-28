@@ -35,11 +35,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\Expression.Blend.Sdk.1.0.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,18 +75,25 @@
     <Compile Include="Class\Behavior\EffectBehavior.cs" />
     <Compile Include="Class\Converter\IDisplayConverter.cs" />
     <Compile Include="Class\Converter\IMultiDisplayValueConverter.cs" />
-    <Compile Include="UserControl\Adornor.xaml.cs">
+    <Compile Include="Class\ValidationRule\IValidationExceptionHandler.cs" />
+    <Compile Include="Class\ValidationRule\NotEmptyValidationRule.cs" />
+    <Compile Include="Class\ValidationRule\ValidationExceptionBehavior.cs" />
+    <Compile Include="UserControls\Adornor.xaml.cs">
       <DependentUpon>Adornor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Animation.xaml.cs">
+    <Compile Include="UserControls\Animation.xaml.cs">
       <DependentUpon>Animation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Behavior.xaml.cs">
+    <Compile Include="UserControls\Behavior.xaml.cs">
       <DependentUpon>Behavior.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Converter.xaml.cs">
+    <Compile Include="UserControls\Converter.xaml.cs">
       <DependentUpon>Converter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ValidationRule.xaml.cs">
+      <DependentUpon>ValidationRule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -87,19 +106,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserControl\Adornor.xaml">
+    <Page Include="UserControls\Adornor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\Animation.xaml">
+    <Page Include="UserControls\Animation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\Behavior.xaml">
+    <Page Include="UserControls\Behavior.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\Converter.xaml">
+    <Page Include="UserControls\Converter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ValidationRule.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -132,7 +155,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="UserControl\Logo.jpg">
+    <Resource Include="UserControls\Logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

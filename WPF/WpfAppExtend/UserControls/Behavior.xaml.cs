@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfAppExtend.UserControl
+namespace WpfAppExtend.UserControls
 {
     /// <summary>
-    /// Converter.xaml 的交互逻辑
+    /// Behavior.xaml 的交互逻辑
     /// </summary>
-    public partial class Converter /*: UserControl*/
+    public partial class Behavior /*: UserControl*/
     {
-        public Converter()
+        public Behavior()
         {
             InitializeComponent();
         }

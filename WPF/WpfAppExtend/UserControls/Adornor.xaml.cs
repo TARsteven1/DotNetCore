@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfAppExtend.UserControl
+namespace WpfAppExtend.UserControls
 {
     /// <summary>
     /// Adornor.xaml 的交互逻辑

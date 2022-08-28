@@ -12,20 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GalaSoft.MvvmLight;
-using WpfAppExtend.Class.ValidationRuleClass;
 
-namespace WpfAppExtend
+namespace WpfAppExtend.UserControls
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// Converter.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Converter /*: UserControl*/
     {
-        public MainWindow()
+        public Converter()
         {
             InitializeComponent();
         }
-   
     }
 }
