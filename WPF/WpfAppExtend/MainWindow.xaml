@@ -17,6 +17,9 @@
 			<TabItem Header="Behavior">
 				<usercontrol:Behavior/>
 			</TabItem>
+			<TabItem Header="Animation">
+				<usercontrol:Animation/>
+			</TabItem>
 		</TabControl>
 	</Grid>
 </Window>

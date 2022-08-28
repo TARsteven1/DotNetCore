@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:WpfAppExtend"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+		<!--xaml实现动画-->
+		<Storyboard x:Key="teststory" >
+			<DoubleAnimation From="70" To="10" AutoReverse="True" Duration="2"  Storyboard.TargetProperty="Width"/>
+		</Storyboard> 
     </Application.Resources>
 </Application>

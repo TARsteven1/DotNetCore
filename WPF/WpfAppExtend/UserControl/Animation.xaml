@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="WpfAppExtend.UserControl.Animation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfAppExtend.UserControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="40"/>
+			<RowDefinition/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<Button Width="100" Height="30" Content="Run" Click="Start" >
+			<Button.Triggers>
+				<EventTrigger RoutedEvent="Mouse.MouseEnter">
+					<EventTrigger.Actions>
+						<!--引用自定义动画-->
+						<BeginStoryboard Storyboard="{StaticResource teststory}"/>
+					</EventTrigger.Actions>
+				</EventTrigger>
+			</Button.Triggers>
+		</Button>
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Button Name="Sample1" Width="100" Height="50" />
+			<Button Name="Sample2" Grid.Column="1" Width="100" Height="50" />
+			<Button Name="Sample3" Grid.Column="2" Width="100" Height="50" />
+			<Button Name="Sample4" Grid.Column="3" Width="100" Height="50" />
+		</Grid>
+		<Grid Grid.Row="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Button Name="Sample5" Width="100" Height="50" >
+				<!--添加位置对象，方便实现位移-->
+				<Button.RenderTransform>
+					<TranslateTransform X="0" Y="0"/>
+				</Button.RenderTransform>
+			</Button>
+			<Button Name="Sample6" Grid.Column="1" Width="100" Height="50" >
+				<Button.RenderTransform>
+					<RotateTransform Angle="0" CenterX="0" CenterY="0"/>
+				</Button.RenderTransform>
+			</Button>
+			<Button Name="Sample7" Grid.Column="2" Width="100" Height="50" >
+				<Button.RenderTransform>
+					<TranslateTransform X="0" Y="0"/>
+				</Button.RenderTransform>
+			</Button>
+			<Button Name="Sample8" Grid.Column="3" Width="100" Height="50" Opacity="0">
+				<Button.RenderTransform>
+					<RotateTransform Angle="0" CenterX="0" CenterY="0"/>
+				</Button.RenderTransform>
+			</Button>
+		</Grid>
+	</Grid>
+</UserControl>

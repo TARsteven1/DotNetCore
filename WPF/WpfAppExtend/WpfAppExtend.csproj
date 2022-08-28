@@ -66,6 +66,9 @@
     <Compile Include="UserControl\Adornor.xaml.cs">
       <DependentUpon>Adornor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Animation.xaml.cs">
+      <DependentUpon>Animation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Behavior.xaml.cs">
       <DependentUpon>Behavior.xaml</DependentUpon>
     </Compile>
@@ -85,6 +88,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserControl\Adornor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Animation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
