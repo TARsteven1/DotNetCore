@@ -11,6 +11,7 @@
 			<RowDefinition Height="40"/>
 			<RowDefinition/>
 			<RowDefinition/>
+			<RowDefinition/>
 		</Grid.RowDefinitions>
 		<Button Width="100" Height="30" Content="Run" Click="Start" >
 			<Button.Triggers>
@@ -63,5 +64,32 @@
 				</Button.RenderTransform>
 			</Button>
 		</Grid>
+		<StackPanel Grid.Row="3" HorizontalAlignment="Left">
+			<Button Width="100" Height="100" Content="帧动画" FontSize="24">
+				<Button.RenderTransform>
+					<TranslateTransform  x:Name="FrameAnmiBtn" X="0" Y="0"/>
+				</Button.RenderTransform>
+				<Button.Triggers>
+					<EventTrigger RoutedEvent="Mouse.MouseEnter">
+						<EventTrigger.Actions>
+							<!--关键帧动画-->
+							<BeginStoryboard>
+								<Storyboard>
+									<!--采用组合内差的形式，离散、线性、曲线组合使用-->
+									<DoubleAnimationUsingKeyFrames Storyboard.TargetName="FrameAnmiBtn" Storyboard.TargetProperty="X" Duration="0:0:10" RepeatBehavior="Forever">
+										<!--线性内差，帧时间采用动画总时长的30%的位置-->
+										<LinearDoubleKeyFrame Value="50" KeyTime="30%"/>
+										<!--离散内差，指定帧时间-->
+										<DiscreteDoubleKeyFrame Value="100" KeyTime="0:0:4"/>
+										<!--曲线内差，Uniform均分帧时间，此外还有Paced模式，可以使忽略帧的长度，让动画匀速播放-->
+										<SplineDoubleKeyFrame Value="200" KeyTime="Uniform" KeySpline="0.25,0.6,0.8,1"/>
+									</DoubleAnimationUsingKeyFrames>
+								</Storyboard>
+							</BeginStoryboard>
+						</EventTrigger.Actions>
+					</EventTrigger>
+				</Button.Triggers>
+			</Button>
+		</StackPanel>
 	</Grid>
 </UserControl>
