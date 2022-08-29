@@ -8,6 +8,9 @@
         Title="MainWindow" Height="450" Width="800">
 	<Grid>
 		<TabControl Height="420" Margin="0,0,-0.4,0" >
+			<TabItem Header="Navigation">
+				<usercontrol:NavigationDemo/>
+			</TabItem>
 			<TabItem Header="Adorner">
 				<usercontrol:Adornor/>
 			</TabItem>

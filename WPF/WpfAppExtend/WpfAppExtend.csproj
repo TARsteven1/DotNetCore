@@ -78,6 +78,9 @@
     <Compile Include="Class\ValidationRule\IValidationExceptionHandler.cs" />
     <Compile Include="Class\ValidationRule\NotEmptyValidationRule.cs" />
     <Compile Include="Class\ValidationRule\ValidationExceptionBehavior.cs" />
+    <Compile Include="NavigationPages\Page1.xaml.cs">
+      <DependentUpon>Page1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Adornor.xaml.cs">
       <DependentUpon>Adornor.xaml</DependentUpon>
     </Compile>
@@ -90,10 +93,14 @@
     <Compile Include="UserControls\Converter.xaml.cs">
       <DependentUpon>Converter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\NavigationDemo.xaml.cs">
+      <DependentUpon>NavigationDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ValidationRule.xaml.cs">
       <DependentUpon>ValidationRule.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\Module.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -106,6 +113,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NavigationPages\Page1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\Adornor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -119,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Converter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\NavigationDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -155,7 +170,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="UserControls\Logo.jpg">
+    <Resource Include="Resource\Logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
