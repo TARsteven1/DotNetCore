@@ -13,8 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UserControls\Calculator\Calculator.csproj" />
-    <ProjectReference Include="..\UserControls\Indicator\Indicator.csproj" />
+    <Reference Include="Calculator">
+      <HintPath>..\..\UserControls\Calculator\bin\Debug\netcoreapp3.1\Calculator.dll</HintPath>
+    </Reference>
+    <Reference Include="Indicator">
+      <HintPath>..\..\UserControls\Indicator\bin\Debug\netcoreapp3.1\Indicator.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

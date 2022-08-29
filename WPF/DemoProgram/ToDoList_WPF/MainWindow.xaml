@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoList_WPF" xmlns:viewmodel="clr-namespace:ToDoList_WPF.ViewModel"
 		xmlns:ti="clr-namespace:ToDoList_WPF.Models"
+
 		mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="1000" WindowStyle="None">
 	<Window.DataContext>
@@ -33,24 +34,38 @@
 								<ControlTemplate TargetType="ListBoxItem">
 									<Grid>
 										<Border x:Name="bd1"/>
-										<Border x:Name="bd2"/>
+										<Border x:Name="bd2" />
+
+										<Button x:Name="bd3" Background="Red" Opacity="0" />
+										<!--<Button x:Name="bd3" Background="Red" Opacity="0" 
+												Command="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},
+											Path=DataContext.OpenCommand}" 
+												CommandParameter="{Binding Name}"
+												/>-->
 										<ContentPresenter/>
 									</Grid>
 									<ControlTemplate.Triggers>
 										<Trigger Property="IsMouseOver" Value="True">
 											<Setter  TargetName="bd1" Property="Background" Value="#FFF5F4F4"/>
 										</Trigger>
-										<Trigger Property="IsSelected" Value="True">
+										<Trigger Property="IsSelected" Value="True"  >
+
+											<Setter   Property="FontWeight" Value="Bold"/>
 											<Setter   Property="FontWeight" Value="Bold"/>
 											<Setter Property="Foreground" Value="{Binding BackColor}"/>
 											<Setter  TargetName="bd1" Property="Background" Value="{Binding BackColor}"/>
 											<Setter  TargetName="bd1" Property="Opacity" Value="0.1"/>
 											<Setter TargetName="bd2" Property="BorderThickness" Value="2,0,0,0"/>
 											<Setter TargetName="bd2" Property="BorderBrush" Value="{Binding BackColor}"/>
+											<Setter TargetName="bd3" Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},
+											Path=DataContext.OpenCommand}"/>
+											<Setter TargetName="bd3" Property="CommandParameter" Value="{Binding Name}"/>
+											
+
 										</Trigger>
 										<EventTrigger RoutedEvent="Mouse.MouseEnter">
-											<EventTrigger.Actions>
-												
+											<EventTrigger.Actions >
+
 											</EventTrigger.Actions>
 										</EventTrigger>
 									</ControlTemplate.Triggers>
@@ -107,13 +122,13 @@
 		</DockPanel>
 		<!--TODO:完成右边的主视图布局和逻辑-->
 		<!--添加listItem子项功能-->
-		<Border  x:Name="RightPart"  Background="{Binding Color}"  Grid.Column="1" >
+		<Border  x:Name="RightPart"  Background="{Binding taskItem.BackColor}"  Grid.Column="1" >
 			<!--<Border.DataContext>
 				<ti:TaskItem/>
 			</Border.DataContext>-->
-				<DockPanel LastChildFill="False" >
-					
-				</DockPanel>
+			<DockPanel LastChildFill="False" >
+				<TextBlock Text="{Binding taskItem.Title}" FontSize="50"/>
+			</DockPanel>
 		</Border>
 	</Grid>
 </Window>
