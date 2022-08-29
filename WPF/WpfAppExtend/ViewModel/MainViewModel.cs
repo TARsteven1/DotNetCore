@@ -50,10 +50,10 @@ namespace WpfAppExtend.ViewModel
             modules.Add(new Module() { ItemName = "模块三", ItemColor = "#FF767111" });
 
             OpenCommand = new RelayCommand<string>(t => OpenPage(t));
-
+            //tempdataobject
             Nesting = new Module() { ItemColor = "#FF767111" };
         }
-
+        //侧边导航按钮逻辑
         public void OpenPage(string t)
         {
             Title = t;
@@ -83,16 +83,17 @@ namespace WpfAppExtend.ViewModel
                     break;
             }
         }
+        public RelayCommand<string> OpenCommand { get; set; }
 
         public List<Module> modules { get; set; }
+        //单一对象数据绑定：将整个用户控件对象赋值给Page，从而嵌套到窗口中显示
         private object page;
         public object Page
         {
             get { return page; }
             set { page = value; RaisePropertyChanged(); }
         }
-        public RelayCommand<string> OpenCommand { get; set; }
-
+        //单一值数据绑定
         private string title;
 
         public string Title
@@ -100,6 +101,7 @@ namespace WpfAppExtend.ViewModel
             get { return title; }
             set { title = value; RaisePropertyChanged(); }
         }
+        //嵌套数据绑定
         private Module nesting;
 
         public Module Nesting
