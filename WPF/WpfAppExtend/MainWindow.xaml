@@ -8,9 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
 	<Grid>
 		<TabControl Height="420" Margin="0,0,-0.4,0" >
-			<TabItem Header="Chart">
-				<usercontrol:Chart_LiveChatrs/>
-			</TabItem>
+
 			<TabItem Header="Adorner">
 				<usercontrol:Adornor/>
 			</TabItem>
@@ -28,6 +26,12 @@
 			</TabItem>
 			<TabItem Header="Navigation">
 				<usercontrol:NavigationDemo/>
+			</TabItem>
+			<TabItem Header="Chart">
+				<usercontrol:Chart_LiveChatrs/>
+			</TabItem>
+			<TabItem Header="Nlog">
+				<usercontrol:NlogTestView/>
 			</TabItem>
 		</TabControl>
 	</Grid>
