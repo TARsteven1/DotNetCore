@@ -1,11 +1,17 @@
 <Application x:Class="WpfAppExtend.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:WpfAppExtend" StartupUri="MainWindow.xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
-  <Application.Resources>
-    <!--xaml实现动画-->
-    <Storyboard x:Key="teststory">
-      <DoubleAnimation From="70" To="10" AutoReverse="True" Duration="0:0:2" Storyboard.TargetProperty="Width" />
-    </Storyboard>
-    <!--<ResourceDictionary>
-      <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:WpfAppExtend.ViewModel" />
-    </ResourceDictionary>-->
+    <Application.Resources>
+        <!--将资源字典注册进全局配置中-->
+    <ResourceDictionary>
+      <!--<vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:WpfAppExtend.ViewModel" />-->
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary  Source="/Resource/RosourceDictionarys/ButtonStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--xaml实现动画，写在ResourceDictionary内，否则很麻烦-->
+            <Storyboard x:Key="teststory">
+                <DoubleAnimation From="70" To="10" AutoReverse="True" Duration="0:0:2" Storyboard.TargetProperty="Width" />
+            </Storyboard>
+        </ResourceDictionary>
   </Application.Resources>
 </Application>

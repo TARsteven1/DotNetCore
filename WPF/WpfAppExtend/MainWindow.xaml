@@ -8,8 +8,10 @@
         Title="MainWindow" Height="450" Width="800">
 	<Grid>
 		<TabControl Height="420" Margin="0,0,-0.4,0" >
-
-			<TabItem Header="Adorner">
+            <TabItem Header="Resource">
+                <usercontrol:ResourceBase/>
+            </TabItem>
+            <TabItem Header="Adorner">
 				<usercontrol:Adornor/>
 			</TabItem>
 			<TabItem Header="Converter">
@@ -31,8 +33,8 @@
 				<usercontrol:Chart_LiveChatrs/>
 			</TabItem>
 			<TabItem Header="Nlog">
-				<usercontrol:NlogTestView/>
-			</TabItem>
+                <usercontrol:NlogTestView/>
+            </TabItem>
 		</TabControl>
 	</Grid>
 </Window>

@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--没有定义x :key就说明是全局应用的样式-->
+    <Style TargetType="Button" ></Style>
+    <Style  x:Key="SolidColorStyle" TargetType="Button" >
+        <Setter Property="BorderBrush" Value="AliceBlue"/>
+    </Style>
+    <SolidColorBrush x:Key="SolidColor" Color="Red"/>
+</ResourceDictionary> 
