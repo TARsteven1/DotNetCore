@@ -24,5 +24,10 @@ namespace ToDoList_WPF
         {
             InitializeComponent();
         }
+
+        private void OnShowRightPartClick(object sender, RoutedEventArgs e)
+        {
+            RightPart.Visibility = Visibility.Visible;
+        }
     }
 }

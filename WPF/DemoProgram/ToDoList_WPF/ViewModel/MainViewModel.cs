@@ -40,6 +40,7 @@ namespace ToDoList_WPF.ViewModel
 
         private void ShowPage(string t)
         {
+            
             //taskItem.BackColor = "#FF3E8E6C";
             //taskItem.Title = "我的一天";
             foreach (MenuItem item in MenuItems)
@@ -47,7 +48,7 @@ namespace ToDoList_WPF.ViewModel
                 if (t == item.Name)
                 {
                     taskItem.BackColor = item.BackColor;
-                    taskItem.Title = item.Name;
+                    taskItem.Title =item.Icon+ item.Name;
                 }
             }
         }

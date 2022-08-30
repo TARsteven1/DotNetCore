@@ -14,6 +14,14 @@ namespace ToDoList_WPF.Models
         private string title;
         private string date;
         private string desc;
+        private string isenable;
+
+        public string IsEnable
+        {
+            get { return isenable; }
+            set { isenable = value; RaisePropertyChanged(); }
+        }
+
         public string Id { get; set; }
         public string Title { get => title; set { title = value; RaisePropertyChanged(); } }
         public string Date { get => date; set { date = value; RaisePropertyChanged(); } }
@@ -24,7 +32,15 @@ namespace ToDoList_WPF.Models
         public ObservableCollection<TaskInfo> Tasks { get => tasks; set { tasks = value;RaisePropertyChanged(); } }
         public TaskItem()
         {
-
+            IsEnable = "Visible";
+            if (Tasks ==null)
+            {
+                Desc = "XXXXXXX";
+            }
+            else
+            {
+                Desc = string.Empty;
+            }
         }
     }
 }

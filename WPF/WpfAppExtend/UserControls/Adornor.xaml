@@ -14,7 +14,7 @@
 		<DockPanel x:Name="MyPanel">
 			<Button x:Name="TargetBtn" Width="200" Height="200" DockPanel.Dock="Left"/>
 			<TextBlock Width="200" Height="100" DockPanel.Dock="Top" />
-			<Image Source="Logo.jpg" Width="200" Height="200" DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Center" Cursor="Help"/>
+			<Image Source="/WpfAppExtend;component/Resource/Logo.jpg" Width="200" Height="200" DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Center" Cursor="Help"/>
 		</DockPanel>
 		<StackPanel  Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
 			<Button Click="AddAdorner" Width="200" Height="80" Content="添加装饰效果" Margin="0 0 20 0"/>

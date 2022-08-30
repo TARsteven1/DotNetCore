@@ -19,9 +19,10 @@
 		<DockPanel LastChildFill="True">
 			<TextBlock Text="Microsoft ToDo" Margin="10 10 0 20" DockPanel.Dock="Top" Foreground="#FF737373"/>
 			<DockPanel DockPanel.Dock="Top" LastChildFill="False" Margin="0 10">
-				<Image Source="Logo.jpg" Width="30" Height="30" Margin="10 10 0 0" Cursor="Wait"/>
+				<Image Source="Resource/Logo.jpg" Width="30" Height="30" Margin="10 10 0 0" Cursor="Wait"/>
 				<TextBlock Text="TAR" VerticalAlignment="Center" Margin="10 10 0 0"/>
 				<TextBlock Text="&#xe645;" FontFamily="./Fonts/#iconfont" Margin="0 0 10 0" VerticalAlignment="Center" DockPanel.Dock="Right" FontSize="22"/>
+
 			</DockPanel>
 			<ListBox BorderThickness="0" ItemsSource="{Binding MenuItems}">
 				<ListBox.ItemContainerStyle>
@@ -35,15 +36,9 @@
 									<Grid>
 										<Border x:Name="bd1"/>
 										<Border x:Name="bd2" />
-
-										<Button x:Name="bd3" Background="Red" Opacity="0" />
-										<!--<Button x:Name="bd3" Background="Red" Opacity="0" 
-												Command="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},
-											Path=DataContext.OpenCommand}" 
-												CommandParameter="{Binding Name}"
-												/>-->
 										<ContentPresenter/>
 									</Grid>
+
 									<ControlTemplate.Triggers>
 										<Trigger Property="IsMouseOver" Value="True">
 											<Setter  TargetName="bd1" Property="Background" Value="#FFF5F4F4"/>
@@ -57,13 +52,9 @@
 											<Setter  TargetName="bd1" Property="Opacity" Value="0.1"/>
 											<Setter TargetName="bd2" Property="BorderThickness" Value="2,0,0,0"/>
 											<Setter TargetName="bd2" Property="BorderBrush" Value="{Binding BackColor}"/>
-											<Setter TargetName="bd3" Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},
-											Path=DataContext.OpenCommand}"/>
-											<Setter TargetName="bd3" Property="CommandParameter" Value="{Binding Name}"/>
-											
 
 										</Trigger>
-										<EventTrigger RoutedEvent="Mouse.MouseEnter">
+										<EventTrigger RoutedEvent="Mouse.MouseEnter" >
 											<EventTrigger.Actions >
 
 											</EventTrigger.Actions>
@@ -76,11 +67,17 @@
 				</ListBox.ItemContainerStyle>
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-						<DockPanel LastChildFill="False" Margin="10 0 0 0">
-							<TextBlock Text="{Binding Icon}" Style="{StaticResource IconTextBlockStyle}" />
-							<TextBlock Text="{Binding Name}"  Margin="0 0 10 0" VerticalAlignment="Center" FontSize="14"/>
-							<TextBlock Text="{Binding Count}" DockPanel.Dock="Right" Margin="0 0 10 0" VerticalAlignment="Center" FontWeight="Light"/>
-						</DockPanel>
+						<Grid>
+							<RadioButton Click="OnShowRightPartClick" Command="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow},
+											Path=DataContext.OpenCommand}" 
+												CommandParameter="{Binding Name}" HorizontalContentAlignment="Left">
+								<DockPanel LastChildFill="False" Margin="10 0 0 0">
+									<TextBlock Text="{Binding Icon}" Style="{StaticResource IconTextBlockStyle}" />
+									<TextBlock Text="{Binding Name}"  Margin="0 0 10 0" VerticalAlignment="Center" FontSize="14"/>
+									<TextBlock Text="{Binding Count}" DockPanel.Dock="Right" Margin="0 0 10 0" VerticalAlignment="Center" FontWeight="Light"/>
+								</DockPanel>
+							</RadioButton>
+						</Grid>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 				<!--<RadioButton>
@@ -120,15 +117,44 @@
 				</RadioButton>-->
 			</ListBox>
 		</DockPanel>
-		<!--TODO:完成右边的主视图布局和逻辑-->
+		<!--TODO:完成右边的主视图布局和逻辑ok-->
+		<!--TODO:实现添加子项功能-->
+		
 		<!--添加listItem子项功能-->
-		<Border  x:Name="RightPart"  Background="{Binding taskItem.BackColor}"  Grid.Column="1" >
-			<!--<Border.DataContext>
-				<ti:TaskItem/>
-			</Border.DataContext>-->
-			<DockPanel LastChildFill="False" >
-				<TextBlock Text="{Binding taskItem.Title}" FontSize="50"/>
-			</DockPanel>
+		<Border  x:Name="RightPart"  Background="{Binding taskItem.BackColor}"  Grid.Column="1" Visibility="Hidden" >
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="100"/>
+					<RowDefinition />
+					<RowDefinition Height="80"/>
+				</Grid.RowDefinitions>
+				<Grid  >
+					<Grid.ColumnDefinitions >
+						<ColumnDefinition Width="720"/>
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<TextBlock Text="{Binding taskItem.Title}" FontSize="50" Margin="20 20 0 0" Style="{StaticResource TitleTextBlockStyle}"/>
+					<RadioButton VerticalAlignment="Top" Width="55" Height="55"   Grid.Column="1" Margin="5 0 5 5" >
+						<RadioButton.Content >
+							<TextBlock VerticalAlignment="Top" Text="..." FontSize="33" Width="42" />
+						</RadioButton.Content>
+					</RadioButton>
+				</Grid>
+				<StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" >
+					<Image Source="Resource/Logo.jpg" Width="200" Height="200" />
+					<TextBlock VerticalAlignment="Top" IsEnabled="{Binding taskItem.IsEnable}" Text="{Binding taskItem.Desc}" FontSize="25" Margin="10,0,0,0" HorizontalAlignment="Center"/>
+				</StackPanel>
+				<Grid Grid.Row="2">
+					<RepeatButton Width=" 700" Height=" 50 " Background="Green" Opacity="0.7" >
+						<RepeatButton.Content>
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  >
+								<TextBlock Text="+ 添加一个新事件" FontSize="25"  VerticalAlignment="Center" />
+
+							</StackPanel>
+						</RepeatButton.Content>
+					</RepeatButton>
+				</Grid>
+			</Grid>
 		</Border>
 	</Grid>
 </Window>

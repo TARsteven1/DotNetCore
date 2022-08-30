@@ -5,6 +5,9 @@
              StartupUri="MainWindow.xaml">
 	<Application.Resources>
 		<Style TargetType="RadioButton">
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+			<Setter Property="Height" Value="45"/>
+			<Setter Property="Margin" Value="0 2 0 0"/>
 			<Setter Property="VerticalContentAlignment" Value="Center"/>
 			<Setter Property="Template" >
 				<Setter.Value>
@@ -19,7 +22,7 @@
 								<Setter Property="Background" Value="#F0F6F6" TargetName="border_back"/>
 							</Trigger>
 							
-							<Trigger Property="IsChecked" Value="True">
+							<!--<Trigger Property="IsChecked" Value="True">
 								<Setter Property="Foreground" Value="Red"/>
 								<Setter Property="FontWeight" Value="Bold"/>
 								
@@ -28,6 +31,17 @@
 
 								<Setter Property="BorderThickness" Value="2 0 0 0" TargetName="border_thick"/>
 								<Setter Property="BorderBrush" Value="Red" TargetName="border_thick"/>
+							</Trigger>-->
+							<Trigger Property="IsFocused" Value="True"  >
+
+								<Setter   Property="FontWeight" Value="Bold"/>
+								<Setter   Property="FontWeight" Value="Bold"/>
+								<Setter Property="Foreground" Value="{Binding BackColor}"/>
+								<Setter  TargetName="border_back" Property="Background" Value="{Binding BackColor}"/>
+								<Setter  TargetName="border_back" Property="Opacity" Value="0.1"/>
+								<Setter TargetName="border_thick" Property="BorderThickness" Value="2,0,0,0"/>
+								<Setter TargetName="border_thick" Property="BorderBrush" Value="{Binding BackColor}"/>
+						
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
@@ -38,7 +52,14 @@
 			<Setter Property="VerticalAlignment" Value="Center"/>
 			<Setter Property="FontSize" Value="22"/>
 			<Setter Property="FontFamily" Value="./Fonts/#iconfont"/>
-
+		</Style>		
+		<Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
+			<!--<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="FontSize" Value="22"/>-->
+			<Setter Property="FontFamily" Value="./Fonts/#iconfont"/>
+		</Style>
+		<Style x:Key="ItemBtnStyle" TargetType="Button">
+			
 		</Style>
 	</Application.Resources>
 </Application>
