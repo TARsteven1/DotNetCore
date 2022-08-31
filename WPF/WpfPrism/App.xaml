@@ -1,0 +1,12 @@
+﻿<prism:PrismApplication
+    x:Class="WpfPrism.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:WpfPrism"
+    xmlns:prism="http://prismlibrary.com/">
+    <!--  //从上面提取出来，否则会弹出两个MainWindow  -->
+    <!--  StartupUri="MainWindow.xaml"  -->
+
+
+    <Application.Resources />
+</prism:PrismApplication>
