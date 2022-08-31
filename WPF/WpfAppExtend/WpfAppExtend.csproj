@@ -114,6 +114,9 @@
     <Compile Include="UserControls\DataTemplateSelectorControl.xaml.cs">
       <DependentUpon>DataTemplateSelectorControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DependencyPropertyControl.xaml.cs">
+      <DependentUpon>DependencyPropertyControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\NavigationDemo.xaml.cs">
       <DependentUpon>NavigationDemo.xaml</DependentUpon>
     </Compile>
@@ -169,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\DataTemplateSelectorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DependencyPropertyControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

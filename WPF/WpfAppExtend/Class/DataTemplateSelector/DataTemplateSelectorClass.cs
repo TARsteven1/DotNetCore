@@ -9,7 +9,7 @@ using WpfAppExtend.UserControls;
 
 namespace WpfAppExtend.Class.DataTemplateSelector
 {
-    class DataTemplateSelectorClass : System.Windows.Controls.DataTemplateSelector
+ public   class DataTemplateSelectorClass : System.Windows.Controls.DataTemplateSelector
     {
         public DataTemplate HightTemplate { get; set; }
         public DataTemplate LowTemplate { get; set; }
@@ -29,5 +29,9 @@ namespace WpfAppExtend.Class.DataTemplateSelector
             }
             //return base.SelectTemplate(item, container);
         }
-    }
+
+      }
+
+
+   
 }
