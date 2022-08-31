@@ -89,6 +89,7 @@
     <Compile Include="Class\Behavior\EffectBehavior.cs" />
     <Compile Include="Class\Converter\IDisplayConverter.cs" />
     <Compile Include="Class\Converter\IMultiDisplayValueConverter.cs" />
+    <Compile Include="Class\DataTemplateSelector\DataTemplateSelectorClass.cs" />
     <Compile Include="Class\ValidationRule\IValidationExceptionHandler.cs" />
     <Compile Include="Class\ValidationRule\NotEmptyValidationRule.cs" />
     <Compile Include="Class\ValidationRule\ValidationExceptionBehavior.cs" />
@@ -109,6 +110,9 @@
     </Compile>
     <Compile Include="UserControls\Converter.xaml.cs">
       <DependentUpon>Converter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DataTemplateSelectorControl.xaml.cs">
+      <DependentUpon>DataTemplateSelectorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\NavigationDemo.xaml.cs">
       <DependentUpon>NavigationDemo.xaml</DependentUpon>
@@ -161,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Converter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DataTemplateSelectorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
