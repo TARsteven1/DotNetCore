@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Regions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfPrism.UserControls;
+
 
 namespace WpfPrism
 {
@@ -20,9 +23,35 @@ namespace WpfPrism
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly IRegionManager regionManager;
+        public  IRegion region;
+
+
+
+        public MainWindow(IRegionManager regionmanager)
         {
             InitializeComponent();
+            #region RegionPart
+            //将RegionControl用户控件注册进ContentRegion中
+            this.regionManager = regionmanager;
+            regionmanager.RegisterViewWithRegion("ContentRegion", typeof(RegionControl));
+            regionmanager.RegisterViewWithRegion("ContentRegion2", typeof(RegionControl));
+
+            //通过name将ContentRegion的区域显示到名为Ctr的ContentControl
+            RegionManager.SetRegionName(Ctr, "ContentRegion2");
+            #endregion
+
+        }
+        //对区域的访问
+        public IRegion GetRegion(IRegionManager regionmanager ,string name)
+        {
+            region = regionmanager.Regions[/*"ContentRegion"*/name];
+            return region;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var region = GetRegion(regionManager, "ContentRegion");
         }
     }
 }

@@ -5,8 +5,11 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using Prism.DryIoc;
 using Prism.Ioc;
+using Prism.Regions;
+using WpfPrism.ClassFiles;
 
 namespace WpfPrism
 {
@@ -24,6 +27,15 @@ namespace WpfPrism
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             //throw new NotImplementedException();
+
+        }
+
+        //注册新的自定义区域适配器
+        protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
+        {
+            base.ConfigureRegionAdapterMappings(regionAdapterMappings);
+
+            regionAdapterMappings.RegisterMapping(typeof(StackPanel),Container.Resolve<StackPanelRegionAdapter>());
         }
     }
 }
