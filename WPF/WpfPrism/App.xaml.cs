@@ -27,7 +27,7 @@ namespace WpfPrism
             //使用官方提供的容器拿到主窗口并返回
             return Container.Resolve<MainWindow>();
         }
-        //使用容器的服饰来注册我们要使用的页面，依赖或者服务
+        //使用容器的类型注册器来注册我们要使用的页面，依赖或者服务
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             //throw new NotImplementedException();

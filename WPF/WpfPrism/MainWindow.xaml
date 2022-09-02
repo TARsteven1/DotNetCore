@@ -7,19 +7,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:usercontrols="clr-namespace:WpfPrism.UserControls"
-    xmlns:viewmodel="clr-namespace:WpfPrism.ViewModels"
-    Title="{Binding Title}"
+    xmlns:viewmodel="clr-namespace:WpfPrism.ViewModels" xmlns:views="clr-namespace:WpfPrism.Views"
+	Title="{Binding Title}"
     Width="800"
     Height="450"
     prism:ViewModelLocator.AutoWireViewModel="true"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <!--<Window.DataContext>
-        <viewmodel:MainWindowViewModel />
-    </Window.DataContext>-->
-    <Grid>
-        <TabControl Height="420" Margin="0,0,-0.4,0">
-            <TabItem Header="Region">
+	<Grid>
+		<TabControl Height="420" Margin="0,0,-0.4,0">
+			<TabItem Header="Start">
+				<views:MVVMSampleControl/>
+			</TabItem>
+			<TabItem Header="Region">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
