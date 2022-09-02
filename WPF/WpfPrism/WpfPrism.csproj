@@ -11,4 +11,8 @@
     <PackageReference Include="PrismMVVMLibrary" Version="2.0.0.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PrismModules\ModuleA\ModuleA.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -4,43 +4,58 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WpfPrism"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-	xmlns:usercontrols="clr-namespace:WpfPrism.UserControls"
-	xmlns:viewmodel="clr-namespace:WpfPrism.ViewModels"
-	xmlns:prism="http://prismlibrary.com/"
-	prism:ViewModelLocator.AutoWireViewModel="true"
-	Title="{Binding Title}"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:usercontrols="clr-namespace:WpfPrism.UserControls"
+    xmlns:viewmodel="clr-namespace:WpfPrism.ViewModels"
+    Title="{Binding Title}"
     Width="800"
     Height="450"
-    mc:Ignorable="d"
-	WindowStartupLocation="CenterScreen">
-	<Window.DataContext>
-		<viewmodel:MainWindowViewModel/>
-	</Window.DataContext>
-	<Grid>
-		<TabControl Height="420" Margin="0,0,-0.4,0">
-			<TabItem Header="Region">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-					</Grid.ColumnDefinitions>
-					<!--使用ContentControl显示区域内容,通过名称链接-->
-					<ContentControl  x:Name="Ctr"  />
-					<!--添加StackPanel显示区域内容的支持,通过RegionManager.RegionName显示名为ContentRegion的内容,实现了,panel显示用户控件内容-->
-					<StackPanel Grid.Column="1"  prism:RegionManager.RegionName="ContentRegion" >
-						<Button Width="100" Height="40" Click="Button_Click" Content="访问区域"/>
-					</StackPanel>
-				</Grid>
-			</TabItem>
-			<TabItem Header="Start">
-				<TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="20"
-            Text="Hello Prism!" />
-			</TabItem>
-		</TabControl>
+    prism:ViewModelLocator.AutoWireViewModel="true"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <!--<Window.DataContext>
+        <viewmodel:MainWindowViewModel />
+    </Window.DataContext>-->
+    <Grid>
+        <TabControl Height="420" Margin="0,0,-0.4,0">
+            <TabItem Header="Region">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <!--  使用ContentControl显示区域内容,通过名称链接  -->
+                    <ContentControl x:Name="Ctr" />
+                    <!--  添加StackPanel显示区域内容的支持,通过RegionManager.RegionName显示名为ContentRegion的内容,实现了,panel显示用户控件内容  -->
+                    <StackPanel Grid.Column="1" prism:RegionManager.RegionName="ContentRegion">
+                        <Button
+                            Width="100"
+                            Height="40"
+                            Command="{Binding ShowCommand}"
+                            Content="显示区域" />
+                        <Button
+                            Width="100"
+                            Height="40"
+                            Command="{Binding VisitCommand}"
+                            Content="访问区域" />
+                        <Button
+                            Width="100"
+                            Height="40"
+                            Command="{Binding OpenCommand}"
+                            CommandParameter="ModuleViewA"
+                            Content="打开模块A" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Start">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    Text="Hello Prism!" />
+            </TabItem>
+        </TabControl>
 
-	</Grid>
+    </Grid>
 </Window>

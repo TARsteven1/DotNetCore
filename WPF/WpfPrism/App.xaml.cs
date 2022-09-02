@@ -8,8 +8,12 @@ using System.Windows;
 using System.Windows.Controls;
 using Prism.DryIoc;
 using Prism.Ioc;
+using Prism.Modularity;
 using Prism.Regions;
 using WpfPrism.ClassFiles;
+using ModuleA.ClassFiles;
+using ModuleA.UserControls;
+using WpfPrism.UserControls;
 
 namespace WpfPrism
 {
@@ -27,6 +31,8 @@ namespace WpfPrism
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             //throw new NotImplementedException();
+            containerRegistry.RegisterForNavigation<ModuleViewA>();
+            containerRegistry.RegisterForNavigation<RegionControl>();
 
         }
 
@@ -37,5 +43,24 @@ namespace WpfPrism
 
             regionAdapterMappings.RegisterMapping(typeof(StackPanel),Container.Resolve<StackPanelRegionAdapter>());
         }
+
+        #region 模块加载
+        /// <summary>
+        /// 加载模块的方式有很多种：AppConfig配置，代码加载，文件路径（Directory），LoadManual，Xaml等
+        /// </summary>
+        /// <param name="moduleCatalog"></param>
+        //代码的方式引用模块
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            moduleCatalog.AddModule<ModuleAProfile>();
+            base.ConfigureModuleCatalog(moduleCatalog);
+        }
+        //配置文件路径 的方式引用模块,生成后的文件目录下的Modules文件夹下放入模块的dll即可
+        //protected override IModuleCatalog CreateModuleCatalog()
+        //{
+        //    //return base.CreateModuleCatalog();
+        //    return new DirectoryModuleCatalog() { ModulePath=@".\Modules"} ;
+        //}
+        #endregion
     }
 }
