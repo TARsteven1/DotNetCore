@@ -14,6 +14,8 @@ using WpfPrism.ClassFiles;
 using ModuleA.ClassFiles;
 using ModuleA.UserControls;
 using WpfPrism.UserControls;
+using WpfPrism.Views;
+using WpfPrism.ViewModels;
 
 namespace WpfPrism
 {
@@ -37,6 +39,8 @@ namespace WpfPrism
             //containerRegistry.RegisterForNavigation<ModuleViewA, ModuleAProfile>();
             //也可以重命名view为ViewC
             containerRegistry.RegisterForNavigation<RegionControl>("ViewC");
+            //注册弹窗并绑定上下文
+            containerRegistry.RegisterDialog<ViewDialog, DialogViewModel>();
 
         }
 

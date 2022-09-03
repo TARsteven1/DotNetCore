@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,10 +30,10 @@ namespace WpfPrism
         //public  IRegion region;
         public static ContentControl ctr;
 
-        public MainWindow(IRegionManager regionmanager, IEventAggregator eventAggregator)
+        public MainWindow(IRegionManager regionmanager, IEventAggregator eventAggregator, IDialogService dialogService)
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel(regionmanager, eventAggregator);
+            this.DataContext = new MainWindowViewModel(regionmanager, eventAggregator, dialogService);
             //#region RegionPart
             ////将RegionControl用户控件注册进ContentRegion中
             //this.regionManager = regionmanager;

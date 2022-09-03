@@ -9,6 +9,7 @@ using System.Windows;
 using WpfPrism;
 using ModuleA.UserControls;
 using Prism.Events;
+using Prism.Services.Dialogs;
 
 namespace WpfPrism.ViewModels
 {
@@ -16,26 +17,12 @@ namespace WpfPrism.ViewModels
     {
         private string _title = "Prism Application";
         public string Title { get { return _title; } set { SetProperty(ref _title, value); } }
-
-        private IRegionManager regionManager;
-
-        public DelegateCommand<string> OpenCommand { get; private set; }
-        public DelegateCommand VisitCommand { get; private set; }
-        public DelegateCommand ShowCommand { get; private set; }
-
-        private void Open(string obj)
+        public MainWindowViewModel(IRegionManager regionmanager, IEventAggregator eventAggregator, IDialogService dialogService)
         {
-            //先通过IRegionManager接口获取当前全局定义的可用区域
-            //往此动态设置内容
-            //设置内容的方式时通过依赖注入的形式
-            regionManager.Regions["ContentRegion"].RequestNavigate(obj);
-        }
-        public MainWindowViewModel(IRegionManager regionmanager, IEventAggregator eventAggregator)
-        {
-            this.eventAggregator = eventAggregator;
-            this.regionManager = regionmanager;
 
             #region RegionPart
+            this.regionManager = regionmanager;
+
             OpenCommand = new DelegateCommand<string>(Open);
             //regionManager.Regions["ContentRegion2"].RequestNavigate("RegionControl");
             regionManager.RegisterViewWithRegion("ContentRegion2", typeof(RegionControl));
@@ -49,6 +36,8 @@ namespace WpfPrism.ViewModels
             #endregion
 
             #region MVVM
+            this.eventAggregator = eventAggregator;
+
             MVVMValue = "hello";
             SetValCommand = new DelegateCommand(() => { MVVMValue = "\r\nPrism"; });
             AddValCommand = new DelegateCommand(() => { MVVMValue += ":CompositeCommand"; });
@@ -82,10 +71,29 @@ namespace WpfPrism.ViewModels
             OpenBCommand = new DelegateCommand(OpenB);
             GoForwordCommand = new DelegateCommand(GoForword);
             GoBackCommand = new DelegateCommand(GoBack);
-
             #endregion
+
+            #region Dialog
+            this.dialogService = dialogService;
+            DialogCommand = new DelegateCommand<string>(OpenDialog);
+            #endregion
+
         }
+
         #region Region
+        private IRegionManager regionManager;
+
+        public DelegateCommand<string> OpenCommand { get; private set; }
+        public DelegateCommand VisitCommand { get; private set; }
+        public DelegateCommand ShowCommand { get; private set; }
+
+        private void Open(string obj)
+        {
+            //先通过IRegionManager接口获取当前全局定义的可用区域
+            //往此动态设置内容
+            //设置内容的方式时通过依赖注入的形式
+            regionManager.Regions["ContentRegion"].RequestNavigate(obj);
+        }
         private void ShowRegion(/*IRegionManager regionmanager*/)
         {
             //通过name将ContentRegion的区域显示到名为Ctr的ContentControl
@@ -139,7 +147,8 @@ namespace WpfPrism.ViewModels
             //基础的打开导航语句
             //regionManager.RequestNavigate("NavigationContentRegion", "ModuleViewA");
             //在导航完成后添加导航日志
-            regionManager.RequestNavigate("NavigationContentRegion", "ModuleViewA",arg=> {
+            regionManager.RequestNavigate("NavigationContentRegion", "ModuleViewA", arg =>
+            {
                 journal = arg.Context.NavigationService.Journal;
             }
             );
@@ -147,7 +156,8 @@ namespace WpfPrism.ViewModels
         private void OpenB(/*IRegionManager regionmanager*/)
         {
             //定义传参(方式一,类http请求)
-            regionManager.RequestNavigate("NavigationContentRegion", $"ViewB?value=Hi", arg => {
+            regionManager.RequestNavigate("NavigationContentRegion", $"ViewB?value=Hi", arg =>
+            {
                 journal = arg.Context.NavigationService.Journal;
             });
             //定义传参(方式二,传统方式,说明传参的功能基于键值对)
@@ -166,6 +176,31 @@ namespace WpfPrism.ViewModels
         }
         //定义导航日志
         IRegionNavigationJournal journal;
+        #endregion
+
+        #region Dialog
+        private readonly IDialogService dialogService;
+        public DelegateCommand<string> DialogCommand { set; get; }
+
+        private void OpenDialog(string obj)
+        {
+            //传统打开弹窗的方式:新建窗口ViewDialog然后通过调用下句弹窗
+            //new ViewDialog().ShowDialog();
+
+            //Prism内置对话服务弹窗
+            //定义传参的键值
+            DialogParameters Pairs = new DialogParameters();
+            Pairs.Add("Title", "tips");
+            //弹窗传值并回调
+            dialogService.ShowDialog(obj, Pairs, callback =>
+            {
+                if (callback.Result == ButtonResult.OK)
+                {
+                    //根据点选弹窗的确认与否(OK)返回键名为value的值
+                    string result = callback.Parameters.GetValue<string>("value");
+                }
+            });
+        }
         #endregion
     }
     //定义消息类型,注册此消息传递字符串信息
