@@ -30,9 +30,13 @@ namespace WpfPrism
         //使用容器的类型注册器来注册我们要使用的页面，依赖或者服务
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //throw new NotImplementedException();
+            //只有注册的view才能在导航中使用
             containerRegistry.RegisterForNavigation<ModuleViewA>();
-            containerRegistry.RegisterForNavigation<RegionControl>();
+            containerRegistry.RegisterForNavigation<ViewB>();
+            //手动绑定上下文,少用xaml的自动查找上下文设置(prism:ViewModelLocator.AutoWireViewModel="true")
+            //containerRegistry.RegisterForNavigation<ModuleViewA, ModuleAProfile>();
+            //也可以重命名view为ViewC
+            containerRegistry.RegisterForNavigation<RegionControl>("ViewC");
 
         }
 

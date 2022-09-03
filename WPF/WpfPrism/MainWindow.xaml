@@ -16,9 +16,16 @@
     mc:Ignorable="d">
 	<Grid>
 		<TabControl Height="420" Margin="0,0,-0.4,0">
-			<TabItem Header="Start">
-				<views:MVVMSampleControl/>
+			<TabItem Header="Navigation">
+				<views:NavigationSampleControl/>
 			</TabItem>
+            <TabItem Header="Start">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    Text="Hello Prism!" />
+            </TabItem>
 			<TabItem Header="Region">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -48,14 +55,10 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="Start">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="20"
-                    Text="Hello Prism!" />
-            </TabItem>
-        </TabControl>
+			<TabItem Header="MVVM">
+				<views:MVVMSampleControl/>
+			</TabItem>
+		</TabControl>
 
     </Grid>
 </Window>
