@@ -10,6 +10,7 @@ using WpfPrism;
 using ModuleA.UserControls;
 using Prism.Events;
 using Prism.Services.Dialogs;
+using WpfPrism.Core;
 
 namespace WpfPrism.ViewModels
 {
@@ -17,7 +18,7 @@ namespace WpfPrism.ViewModels
     {
         private string _title = "Prism Application";
         public string Title { get { return _title; } set { SetProperty(ref _title, value); } }
-        public MainWindowViewModel(IRegionManager regionmanager, IEventAggregator eventAggregator, IDialogService dialogService)
+        public MainWindowViewModel(IRegionManager regionmanager, IEventAggregator eventAggregator, /*IDialogService*/IDialogHostService dialogService)
         {
 
             #region RegionPart
@@ -179,7 +180,17 @@ namespace WpfPrism.ViewModels
         #endregion
 
         #region Dialog
-        private readonly IDialogService dialogService;
+        //用于接收传递的数值
+        private string testvalue="Null";
+
+        public string testValue
+        {
+            get { return testvalue; }
+            set { testvalue = value; RaisePropertyChanged(); }
+        }
+
+        //private readonly IDialogService dialogService;
+        private readonly IDialogHostService dialogService;
         public DelegateCommand<string> DialogCommand { set; get; }
 
         private void OpenDialog(string obj)
@@ -197,7 +208,11 @@ namespace WpfPrism.ViewModels
                 if (callback.Result == ButtonResult.OK)
                 {
                     //根据点选弹窗的确认与否(OK)返回键名为value的值
-                    string result = callback.Parameters.GetValue<string>("value");
+                    testValue = callback.Parameters.GetValue<string>("value");
+                }
+                else
+                {
+                    testValue= callback.Parameters.GetValue<string>("Cancel");
                 }
             });
         }

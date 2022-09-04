@@ -12,15 +12,15 @@ namespace WpfPrism.ViewModels
 
         public event Action<IDialogResult> RequestClose;
 
+        DialogParameters Pairs = new DialogParameters();
         public bool CanCloseDialog()
         {
-           return true;
+            return true;
         }
 
         public void OnDialogClosed()
         {
-            DialogParameters Pairs = new DialogParameters();
-            Pairs.Add("value","hi~");
+            if (!Pairs.ContainsKey("value")) Pairs.Add("value", "hi~");
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK, Pairs));
         }
         //弹窗打开时触发
@@ -40,10 +40,14 @@ namespace WpfPrism.ViewModels
         private void Save()
         {
             OnDialogClosed();
-        }        
+        }
         private void Cancel()
         {
-            RequestClose?.Invoke(new DialogResult(ButtonResult.No));
+            if (!Pairs.ContainsKey("Cancel"))
+            {
+                Pairs.Add("Cancel", "Null~");
+            }
+            RequestClose?.Invoke(new DialogResult(ButtonResult.No, Pairs));
 
         }
     }

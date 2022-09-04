@@ -16,6 +16,7 @@ using ModuleA.UserControls;
 using WpfPrism.UserControls;
 using WpfPrism.Views;
 using WpfPrism.ViewModels;
+using WpfPrism.Core;
 
 namespace WpfPrism
 {
@@ -41,6 +42,8 @@ namespace WpfPrism
             containerRegistry.RegisterForNavigation<RegionControl>("ViewC");
             //注册弹窗并绑定上下文
             containerRegistry.RegisterDialog<ViewDialog, DialogViewModel>();
+            //注册自定义对话服务
+            containerRegistry.Register<IDialogHostService, DialogHostService>();
 
         }
 

@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfPrism.Core;
 using WpfPrism.UserControls;
 using WpfPrism.ViewModels;
 
@@ -30,7 +31,7 @@ namespace WpfPrism
         //public  IRegion region;
         public static ContentControl ctr;
 
-        public MainWindow(IRegionManager regionmanager, IEventAggregator eventAggregator, IDialogService dialogService)
+        public MainWindow(IRegionManager regionmanager, IEventAggregator eventAggregator, /*IDialogService*/  IDialogHostService dialogService)
         {
             InitializeComponent();
             this.DataContext = new MainWindowViewModel(regionmanager, eventAggregator, dialogService);

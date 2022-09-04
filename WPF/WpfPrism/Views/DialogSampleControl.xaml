@@ -4,14 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfPrism.Views"
+			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"			 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White">
+	<Grid Background="White">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
-		<TextBlock HorizontalAlignment="Center" Text="对话服务:点击按钮弹出窗口,传递数值" FontSize="24"/>
+		<materialDesign:DialogHost Identifier="Root">
+
+			<StackPanel>
+				<TextBlock HorizontalAlignment="Center" Text="对话服务:点击按钮弹出窗口,传递数值" FontSize="24"/>
+				<TextBlock HorizontalAlignment="Center" Text="{Binding testValue}" FontSize="24"/>
+			</StackPanel>
+		</materialDesign:DialogHost>
 		<Button Grid.Row="1"  Width="200" Height="100" Command="{Binding DialogCommand}"  CommandParameter="ViewDialog"  Content="打开弹窗"/>
 	</Grid>
 </UserControl>
