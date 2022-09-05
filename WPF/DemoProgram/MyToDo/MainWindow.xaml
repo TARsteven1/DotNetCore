@@ -5,8 +5,93 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyToDo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-		<Button Content="hello"/>
-	</Grid>
+		WindowStyle="None"
+		WindowStartupLocation="CenterScreen"
+		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="MainWindow" Height="768" Width="1280"
+		 TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+		>
+	<materialDesign:DialogHost
+        Identifier="RootDialog"
+        DialogTheme="Inherit"
+        SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+
+		<materialDesign:DrawerHost Name="NavDrawer" OpenMode="Modal"
+            IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}"
+            LeftDrawerCornerRadius="0 20 20 0">
+			<materialDesign:DrawerHost.LeftDrawerContent>
+				<DockPanel MinWidth="220">
+
+				</DockPanel>
+			</materialDesign:DrawerHost.LeftDrawerContent>
+
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="auto"/>
+				</Grid.RowDefinitions>
+				<materialDesign:ColorZone
+                    Padding="16"
+                    Mode="PrimaryMid"
+					x:Name="TopColorZone"
+					materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                    DockPanel.Dock="Top">
+					<DockPanel LastChildFill="True">
+						<StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+							<Image Source="/Resource/Head/head.jpg" Width="30" Height="30">
+								<Image.Clip>
+									<EllipseGeometry Center="15,15" RadiusX="15" RadiusY="15"/>
+								</Image.Clip>
+							</Image>
+							<Button x:Name="btnMin" Content="—" Style="{StaticResource MaterialDesignFlatMidBgButton}"/>
+							<Button x:Name="btnMax" Content="☐" Style="{StaticResource MaterialDesignFlatMidBgButton}"/>
+							<Button x:Name="btnClose" Content="✖" Style="{StaticResource MaterialDesignFlatMidBgButton}"/>
+						</StackPanel>
+						<StackPanel Grid.Column="0" Orientation="Horizontal">
+							<ToggleButton
+                                x:Name="MenuToggleButton"
+                                Style="{StaticResource MaterialDesignHamburgerToggleButton}"
+                                IsChecked="False"
+                                
+                                AutomationProperties.Name="HamburgerToggleButton"
+                                Margin="5 0 24 0"/>
+
+							<Button
+                                Margin="0 0 0 0"
+                                ToolTip="Previous Item"
+                                Command="{Binding MovePrevCommand}"
+                                Content="{materialDesign:PackIcon Kind=ArrowLeft, Size=24}"
+                                Style="{StaticResource MaterialDesignToolButton}"
+                                Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
+                                materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"/>
+
+							<Button 
+                                Margin="16 0 0 0"
+                                ToolTip="Next Item"
+                                Command="{Binding MoveNextCommand}"
+                                Content="{materialDesign:PackIcon Kind=ArrowRight, Size=24}"
+                                Style="{StaticResource MaterialDesignToolButton}"
+                                Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
+                                materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"/>
+							<TextBlock Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="22"
+                                   AutomationProperties.Name="Material Design In XAML Toolkit"
+                                   Text="Notebook"
+									   Margin="22,0"/>
+						</StackPanel>
+					<!--</Grid>-->
+			</DockPanel>
+			</materialDesign:ColorZone>
+			</Grid>
+		</materialDesign:DrawerHost>
+	</materialDesign:DialogHost>
 </Window>
