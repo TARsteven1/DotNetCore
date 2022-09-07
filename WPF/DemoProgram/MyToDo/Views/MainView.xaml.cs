@@ -44,6 +44,8 @@ namespace MyToDo.Views
                 if (this.WindowState == WindowState.Normal) this.WindowState = WindowState.Maximized;
                 else this.WindowState = WindowState.Normal;
             };
+            //点击左侧导航后自动收缩导航
+            menuBar.SelectionChanged += (s, e) => { NavDrawer.IsLeftDrawerOpen = false; };
         }
     }
 }

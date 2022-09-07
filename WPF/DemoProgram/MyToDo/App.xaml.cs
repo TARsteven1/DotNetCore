@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using MyToDo.ViewModels;
 using MyToDo.Views;
 using Prism.DryIoc;
 using Prism.Ioc;
@@ -25,8 +26,11 @@ namespace MyToDo
         }
         //使用容器的类型注册器来注册我们要使用的页面，依赖或者服务
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
-        { 
-
+        {
+            containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
+            containerRegistry.RegisterForNavigation<ToDoView, ToDoViewModel>();
+            containerRegistry.RegisterForNavigation<MemoView, MemoViewModel>();
+            containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
         }
 
     }
