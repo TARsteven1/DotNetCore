@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using MyToDo.Views;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -20,7 +21,7 @@ namespace MyToDo
         protected override Window CreateShell()
         {
             //使用官方提供的容器拿到主窗口并返回
-            return Container.Resolve<MainWindow>();
+            return Container.Resolve<MainView>();
         }
         //使用容器的类型注册器来注册我们要使用的页面，依赖或者服务
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

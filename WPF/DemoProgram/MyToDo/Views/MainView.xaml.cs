@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyToDo.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +11,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MyToDo
+namespace MyToDo.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// MainView.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainView : Window
     {
-        public MainWindow()
+        public MainView()
         {
             InitializeComponent();
+            //this.DataContext = new MainViewModel();
             btnMin.Click += (s, e) => { this.WindowState = WindowState.Minimized; };
             btnMax.Click += (s, e) =>
             {
@@ -39,10 +40,10 @@ namespace MyToDo
                 }
             };
             TopColorZone.MouseDoubleClick += (s, e) =>
-             {
-                 if (this.WindowState == WindowState.Normal) this.WindowState = WindowState.Maximized;
-                 else this.WindowState = WindowState.Normal;
-             };
+            {
+                if (this.WindowState == WindowState.Normal) this.WindowState = WindowState.Maximized;
+                else this.WindowState = WindowState.Normal;
+            };
         }
     }
 }
