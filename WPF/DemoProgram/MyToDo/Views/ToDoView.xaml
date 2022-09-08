@@ -5,8 +5,77 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MyToDo.Views"
              mc:Ignorable="d" 
+			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+	<!--使用materialDesign的DialogHost实现右侧边栏-->
+	<materialDesign:DialogHost>
+		<materialDesign:DrawerHost IsRightDrawerOpen="{Binding IsRightDrawerOpen}">
+			<materialDesign:DrawerHost.RightDrawerContent>
+				<DockPanel Width="300" LastChildFill="False">
+					<TextBlock Text="添加代办" FontSize="20" Padding="20,10" FontWeight="Bold" DockPanel.Dock="Top"/>
+					<StackPanel Margin="20" Orientation="Horizontal" DockPanel.Dock="Top">
+						<TextBlock Text="状态:" VerticalAlignment="Center" Margin="10,0" HorizontalAlignment="Center"/>
+						<ComboBox SelectedIndex="0">
+							<ComboBoxItem>代办</ComboBoxItem>
+							<ComboBoxItem>已完成</ComboBoxItem>
+						</ComboBox>
+					</StackPanel>
+					<TextBox Margin="20,0" materialDesign:HintAssist.Hint="请输入待办概要" DockPanel.Dock="Top"/>
+					<TextBox Margin="20,0" MinHeight="100" materialDesign:HintAssist.Hint="请输入待办内容" DockPanel.Dock="Top"/>
+					<Button Margin="20" Content="添加到待办" DockPanel.Dock="Top" Cursor="Hand"/>
+				</DockPanel>
+			</materialDesign:DrawerHost.RightDrawerContent>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="auto"/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+				<StackPanel Margin="15 0 0 0" Orientation="Horizontal">
+					<!--使用materialDesign的输入框清除按钮-->
+					<TextBlock Width="250" materialDesign:HintAssist.Hint="查找代办事项..."
+					   materialDesign:TextFieldAssist.HasClearButton="True" VerticalAlignment="Center"/>
+					<TextBlock Text="筛选:" VerticalAlignment="Center" Margin="10,0" />
+					<ComboBox SelectedIndex="0">
+						<ComboBoxItem>全部</ComboBoxItem>
+						<ComboBoxItem>代办</ComboBoxItem>
+						<ComboBoxItem>已完成</ComboBoxItem>
+					</ComboBox>
+				</StackPanel>
+				<Button HorizontalAlignment="Right" Content="+ 添加代办" Margin="10,5" Command="{Binding OpenRightDrawerCommand}"/>
+				<ItemsControl Grid.Row="1" ItemsSource="{Binding ToDoDtos}" HorizontalAlignment="Center">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel>
+
+							</WrapPanel>
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Grid Width="220" MinHeight="180" MaxHeight="250"  Margin="8" >
+								<Grid.RowDefinitions>
+									<RowDefinition Height="auto"/>
+									<RowDefinition/>
+								</Grid.RowDefinitions>
+								<!--右上三个点删除按钮-->
+								<materialDesign:PopupBox HorizontalAlignment="Right" Panel.ZIndex="1" Margin="0,5">
+									<Button Content="删除"/>
+								</materialDesign:PopupBox>
+								<!--加边角效果就加一个Border,Grid.RowSpan是跨行范围-->
+								<Border CornerRadius="3" Grid.RowSpan="2" Background="#FF1ECA3A"/>
+								<TextBlock Text="{Binding Title}" Padding="10,5" FontWeight="Bold"/>
+								<TextBlock Text="{Binding Content}" Grid.Row="1" Padding="10,5"/>
+								<Canvas Grid.RowSpan="2" ClipToBounds="True" >
+									<Border CornerRadius="100" Canvas.Top="10" Canvas.Right="-40" Width="120" Height="120" Background="#FFFFFF" Opacity="0.1"/>
+									<Border CornerRadius="100" Canvas.Top="80" Canvas.Right="-20" Width="120" Height="120" Background="#FFFFFF" Opacity="0.1"/>
+
+								</Canvas>
+							</Grid>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</Grid>
+		</materialDesign:DrawerHost>
+	</materialDesign:DialogHost>
 </UserControl>
