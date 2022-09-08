@@ -42,6 +42,18 @@
 					</Setter.Value>
 				</Setter>
 			</Style>
+			<!--边框悬停高亮特效-->
+			<Style x:Key="MyBorderItemStyle" TargetType="Border">
+				<Style.Triggers>
+					<Trigger Property="IsMouseOver" Value="True">
+						<Setter Property="Effect">
+							<Setter.Value >
+								<DropShadowEffect ShadowDepth=" 1" Color="#DDDDDD" BlurRadius="10" />
+							</Setter.Value>
+						</Setter>
+					</Trigger>
+				</Style.Triggers>
+			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
 	
