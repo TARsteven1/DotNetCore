@@ -15,12 +15,13 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"
+        FontFamily="微软雅黑"
 		xmlns:prism="http://prismlibrary.com/"
 		prism:ViewModelLocator.AutoWireViewModel="True"
 		xmlns:extensions="clr-namespace:MyToDo.Extensions"
 		xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
 		>
+	<!--FontFamily="{DynamicResource MaterialDesignFont}"-->
 	<materialDesign:DialogHost
         Identifier="RootDialog"
         DialogTheme="Inherit"
@@ -87,10 +88,8 @@
                                 x:Name="MenuToggleButton"
                                 Style="{StaticResource MaterialDesignHamburgerToggleButton}"
                                 IsChecked="False"
-                                
                                 AutomationProperties.Name="HamburgerToggleButton"
                                 Margin="5 0 24 0"/>
-
 							<Button
                                 Margin="0 0 0 0"
                                 ToolTip="Previous Item"
