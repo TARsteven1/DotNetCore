@@ -1,60 +1,64 @@
 ﻿<prism:PrismApplication
-	x:Class="MyToDo.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MyToDo"
-			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-			 xmlns:prism="http://prismlibrary.com/">
-	<!--StartupUri="MainWindow.xaml"-->
-	<Application.Resources>
-		<!--引用materialDesign样式-->
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-				<materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
-				<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-			</ResourceDictionary.MergedDictionaries>
+    x:Class="MyToDo.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:MyToDo"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:prism="http://prismlibrary.com/">
+    <!--  StartupUri="MainWindow.xaml"  -->
+    <Application.Resources>
+        <!--  引用materialDesign样式  -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme
+                    BaseTheme="Dark"
+                    PrimaryColor="DeepPurple"
+                    SecondaryColor="Lime" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-			<Style x:Key="MyListBoxItemStyle" TargetType="ListBoxItem">
-				<Setter Property="MinHeight" Value="40"/>
-				<Setter Property="Template">
-					<Setter.Value>
-						<ControlTemplate TargetType="{x:Type ListBoxItem}">
-							<Grid>
-								<Border x:Name="bdheader"/>
-								<Border x:Name="bd"/>
-								<ContentPresenter 
-									VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-									HorizontalAlignment="{TemplateBinding HorizontalAlignment}"/>
-							</Grid>
-							<ControlTemplate.Triggers>
-								<Trigger  Property="IsSelected" Value="True">
-									<Setter Property="BorderThickness" TargetName="bdheader" Value="4,0,0,0"/>
-									<Setter Property="BorderBrush" TargetName="bdheader" Value="{DynamicResource PrimaryHueLightBrush}"/>
-									<Setter Property="Background" TargetName="bd" Value="{DynamicResource PrimaryHueLightBrush}"/>
-									<Setter Property="Opacity" TargetName="bd" Value="0.2"/>
-								</Trigger>
-								<Trigger  Property="IsMouseOver" Value="True">
-									<Setter Property="Background" TargetName="bd" Value="{DynamicResource PrimaryHueLightBrush}"/>
-									<Setter Property="Opacity" TargetName="bd" Value="0.2"/>
-								</Trigger>
-							</ControlTemplate.Triggers>
-						</ControlTemplate>
-					</Setter.Value>
-				</Setter>
-			</Style>
-			<!--边框悬停高亮特效-->
-			<Style x:Key="MyBorderItemStyle" TargetType="Border">
-				<Style.Triggers>
-					<Trigger Property="IsMouseOver" Value="True">
-						<Setter Property="Effect">
-							<Setter.Value >
-								<DropShadowEffect ShadowDepth=" 1" Color="#DDDDDD" BlurRadius="10" />
-							</Setter.Value>
-						</Setter>
-					</Trigger>
-				</Style.Triggers>
-			</Style>
-		</ResourceDictionary>
-	</Application.Resources>
-	
-	</prism:PrismApplication>
+            <Style x:Key="MyListBoxItemStyle" TargetType="ListBoxItem">
+                <Setter Property="MinHeight" Value="40" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Grid>
+                                <Border x:Name="bdheader" />
+                                <Border x:Name="bd" />
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="bdheader" Property="BorderThickness" Value="4,0,0,0" />
+                                    <Setter TargetName="bdheader" Property="BorderBrush" Value="{DynamicResource PrimaryHueLightBrush}" />
+                                    <Setter TargetName="bd" Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
+                                    <Setter TargetName="bd" Property="Opacity" Value="0.2" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bd" Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
+                                    <Setter TargetName="bd" Property="Opacity" Value="0.2" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!--  边框悬停高亮特效  -->
+            <Style x:Key="MyBorderItemStyle" TargetType="Border">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect
+                                    BlurRadius="10"
+                                    ShadowDepth=" 1"
+                                    Color="#DDDDDD" />
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+
+</prism:PrismApplication>

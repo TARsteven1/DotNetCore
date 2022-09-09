@@ -23,6 +23,7 @@ namespace MyToDo.ViewModels
 
             GoBackCommand = new DelegateCommand(() => { if (Journal!=null&&Journal.CanGoBack) Journal.GoBack(); });
             GoForwardCommand = new DelegateCommand(() => { if (Journal != null && Journal.CanGoForward) Journal.GoForward(); });
+            //Navigate(MenuBars[0]);
         }
 
         private ObservableCollection<MenuBar> menuBars;
