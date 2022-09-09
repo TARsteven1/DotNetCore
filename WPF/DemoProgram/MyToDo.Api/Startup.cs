@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MyToDo.Api.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +27,11 @@ namespace MyToDo.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            //在启动文件中增加数据库配置文件路径解析
+            services.AddDbContext<MyToDoContext>(options=> {
+                var connectionString = Configuration.GetConnectionString("ToDoConnection");
+                options.UseSqlite(connectionString);
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
