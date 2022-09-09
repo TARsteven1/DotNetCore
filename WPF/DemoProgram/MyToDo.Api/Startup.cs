@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MyToDo.Api.Context;
 using MyToDo.Api.Context.Repository;
+using MyToDo.Api.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,8 @@ namespace MyToDo.Api
             .AddCustomRepository<Memo, MemoRepository>()
             .AddCustomRepository<User, UserRepository>()
             ;
+            //зЂВс
+            services.AddTransient<IToDoService,ToDoService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

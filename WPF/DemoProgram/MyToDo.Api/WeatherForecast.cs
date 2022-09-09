@@ -2,6 +2,9 @@ using System;
 
 namespace MyToDo.Api
 {
+    /// <summary>
+    /// ¹Ù·½Ê¾Àý,¿ÉÉ¾³ý
+    /// </summary>
     public class WeatherForecast
     {
         public DateTime Date { get; set; }

@@ -7,7 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyToDo.Api.Controllers
-{
+{/// <summary>
+/// 官方示例
+/// </summary>
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
