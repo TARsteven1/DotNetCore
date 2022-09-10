@@ -9,25 +9,25 @@ using System.Threading.Tasks;
 
 namespace MyToDo.Api.Service
 {/// <summary>
-/// 待办事项的实现
+/// 备忘录的实现
 /// </summary>
-    public class ToDoService : IToDoService
+    public class MemoService : IMemoService
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
-        public ToDoService(IUnitOfWork unitOfWork,IMapper mapper)
+        public MemoService(IUnitOfWork unitOfWork,IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
-        public async Task<ApiResponse> AddAsync(ToDoDto model)
+        public async Task<ApiResponse> AddAsync(MemoDto model)
         {
             try
             {
-                var dbToDo = mapper.Map<ToDo>(model);
+                var dbToDo = mapper.Map<Memo>(model);
 
-                await unitOfWork.GetRepository<ToDo>().InsertAsync(dbToDo);
+                await unitOfWork.GetRepository<Memo>().InsertAsync(dbToDo);
                 if (await unitOfWork.SaveChangesAsync() > 0)
                 {
                     return new ApiResponse(true, model);
@@ -45,7 +45,7 @@ namespace MyToDo.Api.Service
         {
             try
             {
-                var repository = unitOfWork.GetRepository<ToDo>();
+                var repository = unitOfWork.GetRepository<Memo>();
                 var todo = await repository.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(id));
                 repository.Delete(todo);
 
@@ -65,13 +65,12 @@ namespace MyToDo.Api.Service
         {
             try
             {
-                var repository = unitOfWork.GetRepository<ToDo>();
+                var repository = unitOfWork.GetRepository<Memo>();
                 //实现分页查询
                 var todos = await repository.GetPagedListAsync(predicate:
-                x => string.IsNullOrWhiteSpace(query.Search) ? true : x.Title.Equals(query.Search),
-                pageIndex: query.PageIndex, pageSize: query.PageSize
-                , orderBy: source => source.OrderByDescending(t => t.CreateTime)/*根据时间排序*/);
-
+                x=>    string.IsNullOrWhiteSpace(query.Search)?true:x.Title.Equals(query.Search),
+                pageIndex:query.PageIndex,pageSize:query.PageSize
+                ,orderBy:source=> source.OrderByDescending(t=>t.CreateTime)/*根据时间排序*/);
                 //var todos = await repository.GetAllAsync();
                 //var todo = await repository.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(id));
                 //repository.Delete(todo);
@@ -92,7 +91,7 @@ namespace MyToDo.Api.Service
         {
             try
             {
-                var repository = unitOfWork.GetRepository<ToDo>();
+                var repository = unitOfWork.GetRepository<Memo>();
                 var todo = await repository.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(id));
 
                 return new ApiResponse(true, todo);
@@ -104,17 +103,16 @@ namespace MyToDo.Api.Service
             }
         }
 
-        public async Task<ApiResponse> UpdateAsync(ToDoDto model)
+        public async Task<ApiResponse> UpdateAsync(MemoDto model)
         {
             try
             {
-                var dbToDo = mapper.Map<ToDo>(model);
-                var repository = unitOfWork.GetRepository<ToDo>();
+                var dbToDo = mapper.Map<Memo>(model);
+                var repository = unitOfWork.GetRepository<Memo>();
                 var todo = await repository.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(dbToDo.Id));
                 todo.Title = dbToDo.Title;
                 todo.Content = dbToDo.Content;
                 todo.UpdateTime = DateTime.Now;
-                todo.Status = dbToDo.Status;
                 repository.Update(todo);
 
                 if (await unitOfWork.SaveChangesAsync() > 0)
