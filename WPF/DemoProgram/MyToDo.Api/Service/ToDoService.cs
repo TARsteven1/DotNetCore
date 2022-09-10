@@ -1,4 +1,6 @@
-﻿using MyToDo.Api.Context;
+﻿using AutoMapper;
+using MyToDo.Api.Context;
+using MyToDo.Api.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +13,20 @@ namespace MyToDo.Api.Service
     public class ToDoService : IToDoService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IMapper mapper;
 
-        public ToDoService(IUnitOfWork unitOfWork)
+        public ToDoService(IUnitOfWork unitOfWork,IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
-        public async Task<ApiResponse> AddAsync(ToDo model)
+        public async Task<ApiResponse> AddAsync(ToDoDto model)
         {
             try
             {
-                await unitOfWork.GetRepository<ToDo>().InsertAsync(model);
+                var dbToDo = mapper.Map<ToDo>(model);
+
+                await unitOfWork.GetRepository<ToDo>().InsertAsync(dbToDo);
                 if (await unitOfWork.SaveChangesAsync() > 0)
                 {
                     return new ApiResponse(true, model);
@@ -91,16 +97,17 @@ namespace MyToDo.Api.Service
             }
         }
 
-        public async Task<ApiResponse> UpdateAsync(ToDo model)
+        public async Task<ApiResponse> UpdateAsync(ToDoDto model)
         {
             try
             {
+                var dbToDo = mapper.Map<ToDo>(model);
                 var repository = unitOfWork.GetRepository<ToDo>();
-                var todo = await repository.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(model.Id));
-                todo.Title = model.Title;
-                todo.Content = model.Content;
+                var todo = await repository.GetFirstOrDefaultAsync(predicate: x => x.Id.Equals(dbToDo.Id));
+                todo.Title = dbToDo.Title;
+                todo.Content = dbToDo.Content;
                 todo.UpdateTime = DateTime.Now;
-                todo.Status = model.Status;
+                todo.Status = dbToDo.Status;
                 repository.Update(todo);
 
                 if (await unitOfWork.SaveChangesAsync() > 0)

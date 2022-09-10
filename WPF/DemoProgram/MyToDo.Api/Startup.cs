@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MyToDo.Api.Context;
 using MyToDo.Api.Context.Repository;
+using MyToDo.Api.Extensions;
 using MyToDo.Api.Service;
 using System;
 using System.Collections.Generic;
@@ -40,6 +42,12 @@ namespace MyToDo.Api
             ;
             //×¢²á
             services.AddTransient<IToDoService,ToDoService>();
+            //Ìí¼ÓAutoMapper
+            var automapperConfig = new MapperConfiguration(config=> {
+                config.AddProfile(new AutoMapperProFile());
+            });
+            services.AddSingleton(automapperConfig.CreateMapper());
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
