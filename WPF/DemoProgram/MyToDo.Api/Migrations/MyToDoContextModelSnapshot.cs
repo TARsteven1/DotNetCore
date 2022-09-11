@@ -74,7 +74,7 @@ namespace MyToDo.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Acount")
+                    b.Property<string>("Account")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreateTime")

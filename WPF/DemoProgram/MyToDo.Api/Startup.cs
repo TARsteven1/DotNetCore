@@ -43,6 +43,7 @@ namespace MyToDo.Api
             //×¢²á
             services.AddTransient<IToDoService,ToDoService>();
             services.AddTransient<IMemoService,MemoService>();
+            services.AddTransient<ILoginService,LoginService>();
             //Ìí¼ÓAutoMapper
             var automapperConfig = new MapperConfiguration(config=> {
                 config.AddProfile(new AutoMapperProFile());

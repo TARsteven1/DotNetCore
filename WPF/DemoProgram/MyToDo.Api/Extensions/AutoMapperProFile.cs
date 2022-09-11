@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MyToDo.Api.Context;
-using MyToDo.Api.Dtos;
+using MyToDo.Shared.Dtos;
 
 namespace MyToDo.Api.Extensions
 {/// <summary>
@@ -17,6 +17,7 @@ namespace MyToDo.Api.Extensions
         {
             CreateMap<ToDo, ToDoDto>().ReverseMap();
             CreateMap<Memo, MemoDto>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyToDo.Api.Dtos
+namespace MyToDo.Shared.Dtos
 {/// <summary>
 /// 待办事项数据实体
 /// </summary>

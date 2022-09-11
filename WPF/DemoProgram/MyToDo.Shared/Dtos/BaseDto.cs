@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MyToDo.Api.Dtos
+namespace MyToDo.Shared.Dtos
 {
     public class BaseDto :INotifyPropertyChanged
     {

@@ -1,4 +1,4 @@
-﻿using MyToDo.Api.Parameters;
+﻿using MyToDo.Shared.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;

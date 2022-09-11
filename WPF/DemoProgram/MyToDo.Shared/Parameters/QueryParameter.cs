@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyToDo.Api.Parameters
+namespace MyToDo.Shared.Parameters
 {
     public class QueryParameter
     {

@@ -1,5 +1,5 @@
 ﻿using MyToDo.Api.Context;
-using MyToDo.Api.Dtos;
+using MyToDo.Shared.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

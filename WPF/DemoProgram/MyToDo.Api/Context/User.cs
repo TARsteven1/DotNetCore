@@ -7,7 +7,7 @@ namespace MyToDo.Api.Context
 {
     public class User: BaseEntity
     {
-        public string Acount { set; get; }
+        public string Account { set; get; }
         public string UserName { set; get; }
         public string PassWord { set; get; }
     }

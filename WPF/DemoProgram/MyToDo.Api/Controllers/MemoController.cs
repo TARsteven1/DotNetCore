@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyToDo.Api.Context;
-using MyToDo.Api.Dtos;
-using MyToDo.Api.Parameters;
+using MyToDo.Shared.Dtos;
+using MyToDo.Shared.Parameters;
 using MyToDo.Api.Service;
 using System;
 using System.Collections.Generic;
