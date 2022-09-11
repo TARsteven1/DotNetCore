@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using DryIoc;
+using MyToDo.Service;
 using MyToDo.ViewModels;
 using MyToDo.Views;
 using Prism.DryIoc;
@@ -31,9 +33,16 @@ namespace MyToDo
             containerRegistry.RegisterForNavigation<ToDoView, ToDoViewModel>();
             containerRegistry.RegisterForNavigation<MemoView, MemoViewModel>();
             containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
-            
+
             containerRegistry.RegisterForNavigation<SkinView, SkinViewModel>();
             containerRegistry.RegisterForNavigation<AboutView>();
+
+            //注册HttpRestClient,注意填写正确访问地址
+            containerRegistry.GetContainer().Register<HttpRestClient>(made: Parameters.Of.Type<string>(serviceKey:"webUrl"));
+            containerRegistry.GetContainer().RegisterInstance(@"http://localhost:13402/", serviceKey: "webUrl");
+            //注册服务
+            containerRegistry.Register<IToDoService,ToDoService>();
+
         }
 
     }
