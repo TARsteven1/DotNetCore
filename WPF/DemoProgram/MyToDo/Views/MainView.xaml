@@ -24,7 +24,7 @@
 	<!--FontFamily="{DynamicResource MaterialDesignFont}"-->
 	<materialDesign:DialogHost
         Identifier="RootDialog"
-        DialogTheme="Inherit"
+        DialogTheme="Inherit" x:Name="DialogHost"
         SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
 
 		<materialDesign:DrawerHost Name="NavDrawer" OpenMode="Modal"

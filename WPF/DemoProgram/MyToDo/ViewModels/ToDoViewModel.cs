@@ -9,17 +9,19 @@ using Prism.Commands;
 using MyToDo.Shared.Parameters;
 using MyToDo.Service;
 using MyToDo.Shared.Dtos;
+using Prism.Ioc;
+using Prism.Regions;
 
 namespace MyToDo.ViewModels
 {
-    public class ToDoViewModel : BindableBase
+    public class ToDoViewModel : NavigationViewModel
     {
-        public ToDoViewModel(IToDoService service)
+        public ToDoViewModel(IToDoService service, IContainerProvider povider):base(povider)
         {
             ToDoDtos = new ObservableCollection<ToDoDto>();
             OpenRightDrawerCommand = new DelegateCommand(() => { IsRightDrawerOpen = !IsRightDrawerOpen; });
             this.service = service;
-            CreateToDoList();
+            //CreateToDoList();
         }
         private ObservableCollection<ToDoDto> toDoDtos;
 
@@ -28,8 +30,12 @@ namespace MyToDo.ViewModels
             get { return toDoDtos; }
             set { toDoDtos = value; RaisePropertyChanged(); }
         }
-        async void CreateToDoList()
+        /// <summary>
+        /// 获取服务器数据
+        /// </summary>
+        async void GetDataAsync()
         {
+            UpdateLoading(true);
             var todoResult = await service.GetAllAsync(new QueryParameter()
             {
                 PageIndex = 0,
@@ -47,6 +53,7 @@ namespace MyToDo.ViewModels
             //{
             //    ToDoDtos.Add(new ToDoDto() { Title = "测试数据" + i, Content = "嘻嘻嘻嘻嘻嘻寻寻"/*, Color = "#FF0CA0FF" */});
             //}
+            UpdateLoading(false);
 
         }
         public DelegateCommand OpenRightDrawerCommand { private set; get; }
@@ -59,6 +66,10 @@ namespace MyToDo.ViewModels
             set { isRightDrawerOpen = value; RaisePropertyChanged(); }
         }
 
-
+        public override void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            base.OnNavigatedTo(navigationContext);
+            GetDataAsync();
+        }
     }
 }

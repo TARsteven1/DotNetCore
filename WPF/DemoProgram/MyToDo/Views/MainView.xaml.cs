@@ -11,7 +11,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MyToDo.Common.Event;
 using System.Windows.Shapes;
+using Prism.Events;
+using MyToDo.Extensions;
 
 namespace MyToDo.Views
 {
@@ -20,9 +23,16 @@ namespace MyToDo.Views
     /// </summary>
     public partial class MainView : Window
     {
-        public MainView()
+        public MainView(IEventAggregator aggregator)
         {
             InitializeComponent();
+            //注册等待消息窗口
+            aggregator.Register(arg=> { DialogHost.IsOpen = arg.IsOpen;
+                if (DialogHost.IsOpen)
+                {
+                    DialogHost.DialogContent = new ProgressView();
+                }
+            });
             //this.DataContext = new MainViewModel();
             btnMin.Click += (s, e) => { this.WindowState = WindowState.Minimized; };
             btnMax.Click += (s, e) =>
