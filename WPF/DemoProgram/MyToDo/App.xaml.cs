@@ -42,6 +42,7 @@ namespace MyToDo
             containerRegistry.GetContainer().RegisterInstance(@"http://localhost:13402/", serviceKey: "webUrl");
             //注册服务
             containerRegistry.Register<IToDoService,ToDoService>();
+            containerRegistry.Register<IMemoService, MemoService>();
 
         }
 

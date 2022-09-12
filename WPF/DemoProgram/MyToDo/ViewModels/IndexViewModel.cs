@@ -6,6 +6,7 @@ using Prism.Mvvm;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using MyToDo.Common.Models;
+using MyToDo.Shared.Dtos;
 
 namespace MyToDo.ViewModels
 {
@@ -23,8 +24,8 @@ namespace MyToDo.ViewModels
             TaskBars = new ObservableCollection<TaskBar>();
             CreateTaskBar();
 
-            ToDoDtos = new ObservableCollection<ToDoDTO>();
-            MemoDtos = new ObservableCollection<MemoDTO>();
+            ToDoDtos = new ObservableCollection<ToDoDto>();
+            MemoDtos = new ObservableCollection<MemoDto>();
         }
         private ObservableCollection<TaskBar> taskBars;
 
@@ -41,16 +42,16 @@ namespace MyToDo.ViewModels
             TaskBars.Add(new TaskBar() { Icon = "PlaylistStar", Title = "备忘录", Target = "SettingsView", Color = "#FFFFA000", Count = "19" });
         }
 
-        private ObservableCollection<ToDoDTO> toDoDtos;
+        private ObservableCollection<ToDoDto> toDoDtos;
 
-        public ObservableCollection<ToDoDTO> ToDoDtos
+        public ObservableCollection<ToDoDto> ToDoDtos
         {
             get { return toDoDtos; }
             set { toDoDtos = value; RaisePropertyChanged(); }
         }        
-        private ObservableCollection<MemoDTO> memoDtos;
+        private ObservableCollection<MemoDto> memoDtos;
 
-        public ObservableCollection<MemoDTO> MemoDtos
+        public ObservableCollection<MemoDto> MemoDtos
         {
             get { return memoDtos; }
             set { memoDtos = value; RaisePropertyChanged(); }

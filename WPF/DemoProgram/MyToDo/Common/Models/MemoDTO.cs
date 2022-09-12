@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace MyToDo.Common.Models
 {
     /// <summary>
-    /// 备忘录实体类
+    /// 备忘录实体类(弃用)
     /// </summary>
-   public  class MemoDTO :BaseDTO
+    public class MemoDTO :BaseDTO
     {
         private string content;
 

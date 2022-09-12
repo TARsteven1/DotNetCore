@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyToDo.Common.Models
 {
+    //(弃用)
   public  class BaseDTO
     {
         private int id;

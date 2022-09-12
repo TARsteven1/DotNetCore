@@ -41,8 +41,8 @@ namespace MyToDo.Service
         {
             BaseRequest request = new BaseRequest();
             request.Method = RestSharp.Method.GET;
-            request.Route = $"api/{serviceName}/GetAll";
-            request.Parameter = $"api/{serviceName}/GetAll?pageIndex={parameter.PageIndex}&pageSize={parameter.PageSize}&search={parameter.Search}";
+            //request.Route = $"api/{serviceName}/GetAll";
+            request.Route = $"api/{serviceName}/GetAll?pageIndex={parameter.PageIndex}"+ $"&pageSize={parameter.PageSize}"+ $"&search={parameter.Search}";
             //return await client.ExecuteAsync<ApiResponse<PagedList<TEntity>>>(request);
             return await client.ExecuteAsync<PagedList<TEntity>>(request);
         }

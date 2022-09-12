@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyToDo.Common.Models
 {/// <summary>
-/// 待办事项实体类
+/// 待办事项实体类(弃用)
 /// </summary>
    public class ToDoDTO: BaseDTO
     {

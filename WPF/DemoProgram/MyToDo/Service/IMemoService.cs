@@ -7,11 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyToDo.Service
 {
-   public class ToDoService: BaseService<ToDoDto>, IToDoService
+    public interface IMemoService : IBaseService<MemoDto>
     {
-        public ToDoService(HttpRestClient client):base(client ,"ToDo")
-        {
-
-        }
     }
 }

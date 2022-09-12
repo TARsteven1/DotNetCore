@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
 using Prism.Commands;
-using MyToDo.Common.Models;
 using MyToDo.Shared.Parameters;
 using MyToDo.Service;
+using MyToDo.Shared.Dtos;
 
 namespace MyToDo.ViewModels
 {
@@ -16,14 +16,14 @@ namespace MyToDo.ViewModels
     {
         public ToDoViewModel(IToDoService service)
         {
-            ToDoDtos = new ObservableCollection<ToDoDTO>();
+            ToDoDtos = new ObservableCollection<ToDoDto>();
             OpenRightDrawerCommand = new DelegateCommand(() => { IsRightDrawerOpen = !IsRightDrawerOpen; });
             this.service = service;
             CreateToDoList();
         }
-        private ObservableCollection<ToDoDTO> toDoDtos;
+        private ObservableCollection<ToDoDto> toDoDtos;
 
-        public ObservableCollection<ToDoDTO> ToDoDtos
+        public ObservableCollection<ToDoDto> ToDoDtos
         {
             get { return toDoDtos; }
             set { toDoDtos = value; RaisePropertyChanged(); }
@@ -43,9 +43,9 @@ namespace MyToDo.ViewModels
                     ToDoDtos.Add(item);
                 }
             }
-            //for (int i = 0; i < 20; i++)静态测试数据
+            //for (int i = 0; i < 20; i++) /*静态测试数据*/
             //{
-            //ToDoDtos.Add(new ToDoDTO() {  Title = "测试数据"+i, Content = "嘻嘻嘻嘻嘻嘻寻寻"/*, Color = "#FF0CA0FF" */});
+            //    ToDoDtos.Add(new ToDoDto() { Title = "测试数据" + i, Content = "嘻嘻嘻嘻嘻嘻寻寻"/*, Color = "#FF0CA0FF" */});
             //}
 
         }
