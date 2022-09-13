@@ -9,15 +9,15 @@ using Prism.Regions;
 using Prism.Commands;
 using MyToDo.Common.Models;
 using MyToDo.Extensions;
+using MyToDo.Common.Interfaces;
 
 namespace MyToDo.ViewModels
 {
-    public class MainViewModel : BindableBase
+    public class MainViewModel : BindableBase, IConfigureService
     {
         public MainViewModel(IRegionManager regionManager)
         {
             MenuBars = new ObservableCollection<MenuBar>();
-            CreateMenuBar();
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
 
@@ -56,6 +56,12 @@ namespace MyToDo.ViewModels
             {
                 Journal = back.Context.NavigationService.Journal;
             });
+        }
+        //配置首页初始化参数
+        public void Configure()
+        {
+            CreateMenuBar();
+            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
         }
     }
 }

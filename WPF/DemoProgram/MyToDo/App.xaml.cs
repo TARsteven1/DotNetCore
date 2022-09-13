@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using DryIoc;
+using MyToDo.Common.Interfaces;
 using MyToDo.Service;
 using MyToDo.ViewModels;
 using MyToDo.Views;
@@ -25,6 +26,16 @@ namespace MyToDo
         {
             //使用官方提供的容器拿到主窗口并返回
             return Container.Resolve<MainView>();
+        }
+        protected override void OnInitialized()
+        {
+           var service= App.Current.MainWindow.DataContext as IConfigureService;
+            if (service!=null)
+            {
+                service.Configure();
+            }
+            base.OnInitialized();
+
         }
         //使用容器的类型注册器来注册我们要使用的页面，依赖或者服务
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
