@@ -69,7 +69,7 @@ namespace MyToDo.Api.Service
                 var repository = unitOfWork.GetRepository<Memo>();
                 //实现分页查询
                 var todos = await repository.GetPagedListAsync(predicate:
-                x=>    string.IsNullOrWhiteSpace(query.Search)?true:x.Title.Equals(query.Search),
+                x=>    string.IsNullOrWhiteSpace(query.Search)?true:x.Title.Contains(query.Search),
                 pageIndex:query.PageIndex,pageSize:query.PageSize
                 ,orderBy:source=> source.OrderByDescending(t=>t.CreateTime)/*根据时间排序*/);
                 //var todos = await repository.GetAllAsync();

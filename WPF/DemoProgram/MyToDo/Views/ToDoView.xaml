@@ -50,9 +50,12 @@
                         DockPanel.Dock="Top" />
 					<Button Command="{Binding ExecuteCommand}" CommandParameter="保存"
                         Margin="20"
-                        Content="添加到待办"
                         Cursor="Hand"
-                        DockPanel.Dock="Top" />
+                        DockPanel.Dock="Top" >
+						<Button.Content>
+							<TextBlock Text="{Binding CommitTxt}"/>
+						</Button.Content>
+					</Button>
                 </DockPanel>
             </materialDesign:DrawerHost.RightDrawerContent>
             <Grid>

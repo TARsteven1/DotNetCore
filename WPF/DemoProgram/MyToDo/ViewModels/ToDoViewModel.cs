@@ -29,15 +29,25 @@ namespace MyToDo.ViewModels
 
         private async void Delete(ToDoDto obj)
         {
-          var delResult=  await service.DeleteAsync(obj.Id);
-            if (delResult.Status)
+            try
             {
-                var todo = ToDoDtos.FirstOrDefault(t => t.Id.Equals(obj.Id) );
-                if (todo != null)
+                UpdateLoading(true);
+                var delResult = await service.DeleteAsync(obj.Id);
+                if (delResult.Status)
                 {
-                    ToDoDtos.Remove(todo);
+                    var model = ToDoDtos.FirstOrDefault(t => t.Id.Equals(obj.Id));
+                    if (model != null)
+                    {
+                        ToDoDtos.Remove(model);
+                    }
                 }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally { UpdateLoading(false); }
         }
 
         private void Execute(string obj)
@@ -45,7 +55,8 @@ namespace MyToDo.ViewModels
             switch (obj)
             {
                 case "新增":
-                    CurrentDto=new ToDoDto();
+                    CommitTxt = "添加到待办事项";
+                    CurrentDto =new ToDoDto();
                     IsRightDrawerOpen = true;
                     break;
                 case "查询":
@@ -164,6 +175,7 @@ namespace MyToDo.ViewModels
         {
             try
             {
+                CommitTxt = "确认修改";
                 UpdateLoading(true);
                 var todoResult = await service.GetFirstOrDefaultAsync(obj.Id);
                 if (todoResult.Status)
@@ -206,6 +218,12 @@ namespace MyToDo.ViewModels
             get { return selectedIndex; }
             set { selectedIndex = value; RaisePropertyChanged(); }
         }
+        private string commitTxt;
 
+        public string CommitTxt
+        {
+            get { return commitTxt; }
+            set { commitTxt = value; RaisePropertyChanged(); }
+        }
     }
 }
