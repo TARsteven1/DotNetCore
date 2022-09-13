@@ -26,12 +26,12 @@ namespace MyToDo.Api.Service
         {
             try
             {
-                var dbToDo = mapper.Map<Memo>(model);
+                var dbMemo = mapper.Map<Memo>(model);
 
-                await unitOfWork.GetRepository<Memo>().InsertAsync(dbToDo);
+                await unitOfWork.GetRepository<Memo>().InsertAsync(dbMemo);
                 if (await unitOfWork.SaveChangesAsync() > 0)
                 {
-                    return new ApiResponse(true, model);
+                    return new ApiResponse(true, dbMemo);
                 }
                 return new ApiResponse(false, "添加数据失败!");
             }

@@ -5,7 +5,6 @@ using MyToDo.Shared.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MyToDo.Shared.Context;
 using System.Threading.Tasks;
 
 namespace MyToDo.Api.Service
@@ -31,7 +30,7 @@ namespace MyToDo.Api.Service
                 await unitOfWork.GetRepository<ToDo>().InsertAsync(dbToDo);
                 if (await unitOfWork.SaveChangesAsync() > 0)
                 {
-                    return new ApiResponse(true, model);
+                    return new ApiResponse(true, dbToDo);
                 }
                 return new ApiResponse(false, "添加数据失败!");
             }
@@ -69,7 +68,7 @@ namespace MyToDo.Api.Service
                 var repository = unitOfWork.GetRepository<ToDo>();
                 //实现分页查询
                 var todos = await repository.GetPagedListAsync(predicate:
-                x => string.IsNullOrWhiteSpace(query.Search) ? true : x.Title.Equals(query.Search),
+                x => string.IsNullOrWhiteSpace(query.Search) ? true : x.Title.Contains(query.Search),
                 pageIndex: query.PageIndex, pageSize: query.PageSize
                 , orderBy: source => source.OrderByDescending(t => t.CreateTime)/*根据时间排序*/);
 
@@ -82,6 +81,27 @@ namespace MyToDo.Api.Service
                 return new ApiResponse(true, todos);
                 //}
                 //return new ApiResponse(false, "删除数据失败!");
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(ex.Message);
+            }
+        }
+
+        public async Task<ApiResponse> GetAllAsync(ToDoParameters query)
+        {
+            try
+            {
+                var repository = unitOfWork.GetRepository<ToDo>();
+                //实现分页查询
+                var todos = await repository.GetPagedListAsync(predicate:
+                x => (string.IsNullOrWhiteSpace(query.Search) ? true : x.Title.Contains(query.Search))
+                && (query.Status==null ? true:x.Status.Equals(query.Status)),
+                pageIndex: query.PageIndex, pageSize: query.PageSize
+                , orderBy: source => source.OrderByDescending(t => t.CreateTime)/*根据时间排序*/);
+
+                return new ApiResponse(true, todos);
+
             }
             catch (Exception ex)
             {

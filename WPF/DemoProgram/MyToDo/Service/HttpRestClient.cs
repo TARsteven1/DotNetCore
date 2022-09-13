@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MyToDo.Api.Service;
+//using MyToDo.Api.Service;
 using RestSharp;
-using MyToDo.Shared.Context;
 using Newtonsoft.Json;
+using MyToDo.Shared.Context;
 
 namespace MyToDo.Service
 {

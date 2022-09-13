@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyToDo.Api.Context;
 using MyToDo.Shared.Dtos;
 using MyToDo.Shared.Parameters;
 using MyToDo.Api.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MyToDo.Shared.Context;
 using System.Threading.Tasks;
 
 namespace MyToDo.Api.Controllers
