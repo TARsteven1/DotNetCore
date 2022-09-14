@@ -9,7 +9,9 @@ using DryIoc;
 using MyToDo.Common.Interfaces;
 using MyToDo.Service;
 using MyToDo.ViewModels;
+using MyToDo.ViewModels.Dialogs;
 using MyToDo.Views;
+using MyToDo.Views.Dialogs;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -54,6 +56,10 @@ namespace MyToDo
             //注册服务
             containerRegistry.Register<IToDoService,ToDoService>();
             containerRegistry.Register<IMemoService, MemoService>();
+
+            containerRegistry.RegisterForNavigation<AddToDoView, AddToDoViewModel>();
+            containerRegistry.RegisterForNavigation<AddMemoView, AddMemoViewModel>();
+            containerRegistry.Register<IDialogHostService, DialogHostService>();
 
         }
 

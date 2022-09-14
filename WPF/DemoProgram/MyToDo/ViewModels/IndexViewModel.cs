@@ -7,6 +7,9 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using MyToDo.Common.Models;
 using MyToDo.Shared.Dtos;
+using Prism.Commands;
+using Prism.Services.Dialogs;
+using MyToDo.Common.Interfaces;
 
 namespace MyToDo.ViewModels
 {
@@ -19,13 +22,15 @@ namespace MyToDo.ViewModels
             get { return "今天是"+System.DateTime.Now.ToString("yyyy-MM-dd")+" "+ System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek); }
             set { info = value; RaisePropertyChanged(); }
         }
-        public IndexViewModel()
+        public IndexViewModel(IDialogHostService service)
         {
             TaskBars = new ObservableCollection<TaskBar>();
             CreateTaskBar();
 
             ToDoDtos = new ObservableCollection<ToDoDto>();
             MemoDtos = new ObservableCollection<MemoDto>();
+            ExecuteCommand = new DelegateCommand<string>(Execute);
+            this.service = service;
         }
         private ObservableCollection<TaskBar> taskBars;
 
@@ -50,11 +55,29 @@ namespace MyToDo.ViewModels
             set { toDoDtos = value; RaisePropertyChanged(); }
         }        
         private ObservableCollection<MemoDto> memoDtos;
+        private readonly IDialogHostService service;
 
         public ObservableCollection<MemoDto> MemoDtos
         {
             get { return memoDtos; }
             set { memoDtos = value; RaisePropertyChanged(); }
+        }
+        public DelegateCommand<string> ExecuteCommand { private set; get; }
+
+        private void Execute(string obj)
+        {
+            switch (obj)
+            {
+                case "AddToDo":
+                    service.ShowDialog("AddToDoView",null);
+                    break;
+                case "AddMemo":
+                    service.ShowDialog("AddMemoView", null);
+                    break;
+         
+                default:
+                    break;
+            }
         }
     }
 }
