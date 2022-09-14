@@ -1,6 +1,8 @@
 ﻿using MaterialDesignThemes.Wpf;
 using MyToDo.Common.Interfaces;
+using MyToDo.Shared.Dtos;
 using Prism.Commands;
+using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MyToDo.ViewModels.Dialogs
 {
-    public class AddMemoViewModel : IDialogHostAware
+    public class AddMemoViewModel : BindableBase, IDialogHostAware
     {
         public AddMemoViewModel()
         {
@@ -20,6 +22,7 @@ namespace MyToDo.ViewModels.Dialogs
 
         private void Cancel()
         {
+
             if (DialogHost.IsDialogOpen(DialogHostName))
                 DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.No));
 
@@ -27,9 +30,12 @@ namespace MyToDo.ViewModels.Dialogs
 
         private void Save()
         {
+            if (string.IsNullOrWhiteSpace(MemoModel.Title) || string.IsNullOrWhiteSpace(MemoModel.Content)) return;
+
             if (DialogHost.IsDialogOpen(DialogHostName))
             {
                 DialogParameters pairs = new DialogParameters();
+                pairs.Add("Value", MemoModel);
                 DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.OK, pairs));
             }
 
@@ -40,7 +46,18 @@ namespace MyToDo.ViewModels.Dialogs
 
         public void OnDialogOpend(IDialogParameters parameters)
         {
-            throw new NotImplementedException();
+            if (parameters.ContainsKey("Value"))
+            {
+                MemoModel = parameters.GetValue<MemoDto>("Value");
+            }
+            else MemoModel = new MemoDto();
+        }
+        private MemoDto memoModel;
+        //新增或编辑用的实体
+        public MemoDto MemoModel
+        {
+            get { return memoModel; }
+            set { memoModel = value; RaisePropertyChanged(); }
         }
     }
 }

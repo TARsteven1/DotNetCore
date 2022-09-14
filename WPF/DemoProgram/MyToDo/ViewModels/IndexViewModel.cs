@@ -10,19 +10,25 @@ using MyToDo.Shared.Dtos;
 using Prism.Commands;
 using Prism.Services.Dialogs;
 using MyToDo.Common.Interfaces;
+using Prism.Ioc;
+using MyToDo.Service;
 
 namespace MyToDo.ViewModels
 {
-    public class IndexViewModel : BindableBase
+    public class IndexViewModel : NavigationViewModel
     {
+        private readonly IDialogHostService service;
+        private readonly IContainerProvider containerProvider;
+        private readonly IToDoService toDoService;
+        private readonly IMemoService memoService;
         private string info;
 
         public string Info
         {
-            get { return "今天是"+System.DateTime.Now.ToString("yyyy-MM-dd")+" "+ System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek); }
+            get { return "今天是" + System.DateTime.Now.ToString("yyyy-MM-dd") + " " + System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek); }
             set { info = value; RaisePropertyChanged(); }
         }
-        public IndexViewModel(IDialogHostService service)
+        public IndexViewModel(IContainerProvider containerProvider,IDialogHostService service) : base(containerProvider)
         {
             TaskBars = new ObservableCollection<TaskBar>();
             CreateTaskBar();
@@ -31,6 +37,9 @@ namespace MyToDo.ViewModels
             MemoDtos = new ObservableCollection<MemoDto>();
             ExecuteCommand = new DelegateCommand<string>(Execute);
             this.service = service;
+            this.toDoService = containerProvider.Resolve<IToDoService>();
+            this.memoService = containerProvider.Resolve<IMemoService>();
+            this.containerProvider = containerProvider;
         }
         private ObservableCollection<TaskBar> taskBars;
 
@@ -53,9 +62,9 @@ namespace MyToDo.ViewModels
         {
             get { return toDoDtos; }
             set { toDoDtos = value; RaisePropertyChanged(); }
-        }        
+        }
         private ObservableCollection<MemoDto> memoDtos;
-        private readonly IDialogHostService service;
+
 
         public ObservableCollection<MemoDto> MemoDtos
         {
@@ -63,18 +72,53 @@ namespace MyToDo.ViewModels
             set { memoDtos = value; RaisePropertyChanged(); }
         }
         public DelegateCommand<string> ExecuteCommand { private set; get; }
+        
 
-        private void Execute(string obj)
+        private async void Execute(string obj)
         {
             switch (obj)
             {
                 case "AddToDo":
-                    service.ShowDialog("AddToDoView",null);
+                    var dialogToDoResult = await service.ShowDialog("AddToDoView", null);
+                    if (dialogToDoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
+                    {
+                        var todo = dialogToDoResult.Parameters.GetValue<ToDoDto>("Value");
+                        if (todo.Id > 0)
+                        {
+                            //更新
+                        }
+                        else
+                        {
+                            //新增
+                            var addResult = await toDoService.AddAsync(todo);
+                            if (addResult.Status)
+                            {
+                                ToDoDtos.Add(addResult.Result);
+                            }
+                        }
+                    }
                     break;
                 case "AddMemo":
-                    service.ShowDialog("AddMemoView", null);
+                    var dialogMemoResult = await service.ShowDialog("AddMemoView", null);
+                    if (dialogMemoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
+                    {
+                        var memo = dialogMemoResult.Parameters.GetValue<MemoDto>("Value");
+                        if (memo.Id > 0)
+                        {
+                            //更新
+                        }
+                        else
+                        {
+                            //新增
+                            var addResult = await memoService.AddAsync(memo);
+                            if (addResult.Status)
+                            {
+                                MemoDtos.Add(addResult.Result);
+                            }
+                        }
+                    }
                     break;
-         
+
                 default:
                     break;
             }

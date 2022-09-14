@@ -41,15 +41,16 @@ namespace MyToDo.Service
             if (!(dialogContent.DataContext is IDialogHostAware dialogAware))
                 throw new NullReferenceException("A Dialog's ViewModel must implement the IDialogHostAware interfaceIDialogAware");
             dialogAware.DialogHostName = dialogHostName;
-            DialogOpenedEventHandler eventHandler = (sender, eventArgs) => {
+            DialogOpenedEventHandler eventHandler = (sender, eventArgs) =>
+            {
                 if (dialogAware is IDialogHostAware aware)
                 {
                     aware.OnDialogOpend(parameters);
-                    eventArgs.Session.UpdateContent(content);
                 }
+                eventArgs.Session.UpdateContent(content);
             };
 
-            return (IDialogResult)await DialogHost.Show(dialogContent, dialogAware.DialogHostName,eventHandler);
+            return (IDialogResult)await DialogHost.Show(dialogContent, dialogAware.DialogHostName, eventHandler);
             //if (dialogAware != null) dialogAware.OnDialogOpened(parameters);
             ////往DialogHost的Root节点中设置内容content ,并返回一个点击结果
             ////await  DialogHost.Show(content/*,"Root"*/);

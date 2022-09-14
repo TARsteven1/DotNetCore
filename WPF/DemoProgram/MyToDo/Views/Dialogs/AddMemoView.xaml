@@ -11,11 +11,11 @@
 			<RowDefinition/>
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
-		<TextBlock Padding="20,10" Text="添加备忘录" FontSize="20" FontWeight="Bold"/>
+		<TextBlock  Padding="20,10" Text="添加备忘录" FontSize="20" FontWeight="Bold"/>
 		<DockPanel Grid.Row="1" LastChildFill="False">
-			<TextBox Margin="20,0" materialDesign:HintAssist.Hint="请输入备忘录概要" DockPanel.Dock="Top"/>
+			<TextBox Text="{Binding MemoModel.Title}" Margin="20,0" materialDesign:HintAssist.Hint="请输入备忘录概要" DockPanel.Dock="Top"/>
 			<!--让输入框可以换行以及输入换行的内容-->
-			<TextBox MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True" Margin="20,10" materialDesign:HintAssist.Hint="请输入备忘录内容" DockPanel.Dock="Top"/>
+			<TextBox Text="{Binding MemoModel.Content}" MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True" Margin="20,10" materialDesign:HintAssist.Hint="请输入备忘录内容" DockPanel.Dock="Top" Cursor="Arrow"/>
 		</DockPanel>
 		<StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
 			<Button Content="取消" Command="{Binding CancelCommand}" Margin="0,0,10,0 " Style="{StaticResource MaterialDesignOutlinedButton}" Cursor="Hand"/>
