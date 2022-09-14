@@ -15,7 +15,7 @@ namespace MyToDo.ViewModels
 {
     public class MainViewModel : BindableBase, IConfigureService
     {
-        public MainViewModel(IRegionManager regionManager)
+        public MainViewModel(IRegionManager regionManager )
         {
             MenuBars = new ObservableCollection<MenuBar>();
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);

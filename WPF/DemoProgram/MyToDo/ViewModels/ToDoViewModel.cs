@@ -11,17 +11,21 @@ using MyToDo.Service;
 using MyToDo.Shared.Dtos;
 using Prism.Ioc;
 using Prism.Regions;
+using MyToDo.Common.Interfaces;
+using MyToDo.Extensions;
 
 namespace MyToDo.ViewModels
 {
     public class ToDoViewModel : NavigationViewModel
     {
+        private readonly IDialogHostService dialogHost;
         public ToDoViewModel(IToDoService service, IContainerProvider povider) : base(povider)
         {
             ToDoDtos = new ObservableCollection<ToDoDto>();
             //OpenRightDrawerCommand = new DelegateCommand(() => { IsRightDrawerOpen = !IsRightDrawerOpen; });
             ExecuteCommand = new DelegateCommand<string>(Execute);
             this.service = service;
+            dialogHost = povider.Resolve<IDialogHostService>();
             //CreateToDoList();
             SelectedCommand = new DelegateCommand<ToDoDto>(Selected);
             DeleteCommand = new DelegateCommand<ToDoDto>(Delete);
@@ -31,7 +35,10 @@ namespace MyToDo.ViewModels
         {
             try
             {
+                var dialogResult = await dialogHost.Question("提示", $"确认删除待办事项:{obj.Title}?");
+                if (dialogResult.Result != Prism.Services.Dialogs.ButtonResult.OK) return;
                 UpdateLoading(true);
+
                 var delResult = await service.DeleteAsync(obj.Id);
                 if (delResult.Status)
                 {
@@ -56,7 +63,7 @@ namespace MyToDo.ViewModels
             {
                 case "新增":
                     CommitTxt = "添加到待办事项";
-                    CurrentDto =new ToDoDto();
+                    CurrentDto = new ToDoDto();
                     IsRightDrawerOpen = true;
                     break;
                 case "查询":
@@ -70,7 +77,7 @@ namespace MyToDo.ViewModels
 
         private async void SaveItem()
         {
-            if (string.IsNullOrWhiteSpace(CurrentDto.Title)|| string.IsNullOrWhiteSpace(CurrentDto.Content))
+            if (string.IsNullOrWhiteSpace(CurrentDto.Title) || string.IsNullOrWhiteSpace(CurrentDto.Content))
             {
                 return;/*提示内容标题不能为空*/
             }
@@ -129,14 +136,14 @@ namespace MyToDo.ViewModels
         async void GetDataAsync()
         {
             UpdateLoading(true);
-          int? Status=  SelectedIndex == 0 ? null: SelectedIndex == 2 ? 1 : 0;
+            int? Status = SelectedIndex == 0 ? null : SelectedIndex == 2 ? 1 : 0;
             var todoResult = await service.GetAllFilterAsync(new ToDoParameters()
             {
                 PageIndex = 0,
                 PageSize = 100,
                 Search = Search,
                 Status = Status
-            }) ;
+            });
             ToDoDtos.Clear();
             if (todoResult.Status)
             {

@@ -1,18 +1,20 @@
-﻿using MaterialDesignThemes.Wpf;
-using MyToDo.Common.Interfaces;
-using Prism.Commands;
-using Prism.Services.Dialogs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MaterialDesignThemes.Wpf;
+using MyToDo.Common.Interfaces;
+using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Services.Dialogs;
 
-namespace MyToDo.ViewModels.Dialogs
+namespace MyToDo.ViewModels.Messages
 {
-    public class AddMemoViewModel : IDialogHostAware
+    public class MessageViewModel : BindableBase, IDialogHostAware
     {
-        public AddMemoViewModel()
+ 
+        public MessageViewModel()
         {
             SaveCommand = new DelegateCommand(Save);
             CancelCommand = new DelegateCommand(Cancel);
@@ -22,7 +24,6 @@ namespace MyToDo.ViewModels.Dialogs
         {
             if (DialogHost.IsDialogOpen(DialogHostName))
                 DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.No));
-
         }
 
         private void Save()
@@ -34,13 +35,31 @@ namespace MyToDo.ViewModels.Dialogs
             }
 
         }
-        public string DialogHostName { get; set; }
+        public string DialogHostName { get; set; } = "RootDialog";
         public DelegateCommand SaveCommand { get; set; }
         public DelegateCommand CancelCommand { get; set; }
 
         public void OnDialogOpend(IDialogParameters parameters)
         {
-            throw new NotImplementedException();
+            if(parameters.ContainsKey("Title"))
+            Title = parameters.GetValue<string>("Title");
+            if(parameters.ContainsKey("Content"))
+            Content = parameters.GetValue<string>("Content");
         }
+        private string title;
+
+        public string Title
+        {
+            get { return title; }
+            set { title = value;  RaisePropertyChanged(); }
+        }   
+        private string content;
+
+        public string Content
+        {
+            get { return content; }
+            set { content = value; RaisePropertyChanged(); }
+        }
+
     }
 }

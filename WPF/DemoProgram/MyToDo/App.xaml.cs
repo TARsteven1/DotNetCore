@@ -10,8 +10,10 @@ using MyToDo.Common.Interfaces;
 using MyToDo.Service;
 using MyToDo.ViewModels;
 using MyToDo.ViewModels.Dialogs;
+using MyToDo.ViewModels.Messages;
 using MyToDo.Views;
 using MyToDo.Views.Dialogs;
+using MyToDo.Views.Messages;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -49,6 +51,7 @@ namespace MyToDo
 
             containerRegistry.RegisterForNavigation<SkinView, SkinViewModel>();
             containerRegistry.RegisterForNavigation<AboutView>();
+            containerRegistry.RegisterForNavigation<MessageView, MessageViewModel>();
 
             //注册HttpRestClient,注意填写正确访问地址
             containerRegistry.GetContainer().Register<HttpRestClient>(made: Parameters.Of.Type<string>(serviceKey:"webUrl"));

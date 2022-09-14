@@ -15,6 +15,7 @@ using MyToDo.Common.Event;
 using System.Windows.Shapes;
 using Prism.Events;
 using MyToDo.Extensions;
+using MyToDo.Common.Interfaces;
 
 namespace MyToDo.Views
 {
@@ -23,7 +24,7 @@ namespace MyToDo.Views
     /// </summary>
     public partial class MainView : Window
     {
-        public MainView(IEventAggregator aggregator)
+        public MainView(IEventAggregator aggregator, IDialogHostService dialogHost)
         {
             InitializeComponent();
             //注册等待消息窗口
@@ -40,7 +41,10 @@ namespace MyToDo.Views
                 if (this.WindowState == WindowState.Maximized) this.WindowState = WindowState.Normal;
                 else this.WindowState = WindowState.Maximized;
             };
-            btnClose.Click += (s, e) => { this.Close(); };
+            btnClose.Click += async (s, e) => {
+                var dialogResult = await dialogHost.Question("提示", "退出到系统?");
+                if (dialogResult.Result != Prism.Services.Dialogs.ButtonResult.OK) return;
+                this.Close(); };
 
             TopColorZone.MouseMove += (s, e) =>
             {
