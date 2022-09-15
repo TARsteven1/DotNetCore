@@ -82,7 +82,8 @@
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <!--<DockPanel>-->
-                <materialDesign:ColorZone
+				<materialDesign:Snackbar Panel.ZIndex="1" x:Name="SnackBar" MessageQueue="{materialDesign:MessageQueue}"/>
+				<materialDesign:ColorZone
                     x:Name="TopColorZone"
                     Padding="16"
                     materialDesign:ShadowAssist.ShadowDepth="Depth0"

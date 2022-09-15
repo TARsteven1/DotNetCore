@@ -37,6 +37,18 @@ namespace MyToDo.Extensions
         {
             //注册等待消息
             aggregator.GetEvent<UpdateLoadingEvent>().Subscribe(action);
+        }        
+        public static void RegisterMessage(this IEventAggregator aggregator,Action<string> action)
+        {
+            //注册提示消息事件
+            aggregator.GetEvent<MessageEvent>().Subscribe(action);
+        }        
+        public static void SendMessage(this IEventAggregator aggregator,string message)
+        {
+            //注册提示消息事件
+            aggregator.GetEvent<MessageEvent>().Publish(message);
         }
+
+
     }
 }

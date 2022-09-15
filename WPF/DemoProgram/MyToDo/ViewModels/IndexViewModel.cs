@@ -67,18 +67,33 @@ namespace MyToDo.ViewModels
 
         private async void Finished(ToDoDto obj)
         {
-          var updateResult=await toDoService.UpdateAsync(obj);
-            if (updateResult.Status)
+            try
             {
-              var todo=  Summary.ToDoList.FirstOrDefault(t => t.Id.Equals(obj.Id));
-                if (todo!=null)
+                UpdateLoading(true);
+                var updateResult = await toDoService.UpdateAsync(obj);
+                if (updateResult.Status)
                 {
-                    Summary.ToDoList.Remove(todo);
-                    Summary.FinishedCount += 1;
-                    Summary.FinishedRatio = (Summary.FinishedCount / (double)Summary.Sum).ToString("0%");
-                    this.RefreshData();
+                    var todo = Summary.ToDoList.FirstOrDefault(t => t.Id.Equals(obj.Id));
+                    if (todo != null)
+                    {
+                        Summary.ToDoList.Remove(todo);
+                        Summary.FinishedCount += 1;
+                        Summary.FinishedRatio = (Summary.FinishedCount / (double)Summary.Sum).ToString("0%");
+                        this.RefreshData();
+                    }
+                    aggregator.SendMessage("已完成!");
                 }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                UpdateLoading(false);
+            }
+          
         }
 
         private ObservableCollection<TaskBar> taskBars;
@@ -130,80 +145,95 @@ namespace MyToDo.ViewModels
 
         async void AddToDo(ToDoDto tododto)
         {
-            DialogParameters pairs = new DialogParameters();
-            if (tododto!=null)
+            try
             {
-                pairs.Add("Value", tododto);
-            }
-            var dialogToDoResult = await service.ShowDialog("AddToDoView", pairs);
-            if (dialogToDoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
-            {
-                var todo = dialogToDoResult.Parameters.GetValue<ToDoDto>("Value");
-                if (todo.Id > 0)
+                UpdateLoading(true);
+                DialogParameters pairs = new DialogParameters();
+                if (tododto != null)
                 {
-                    //更新
-               var updateResult=await toDoService.UpdateAsync(todo);
-                    if (updateResult.Status)
+                    pairs.Add("Value", tododto);
+                }
+                var dialogToDoResult = await service.ShowDialog("AddToDoView", pairs);
+                if (dialogToDoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
+                {
+                    var todo = dialogToDoResult.Parameters.GetValue<ToDoDto>("Value");
+                    if (todo.Id > 0)
                     {
-                       var todoModel = Summary.ToDoList.FirstOrDefault(t => t.Id.Equals(todo.Id));
-                        if (todoModel!=null)
+                        //更新
+                        var updateResult = await toDoService.UpdateAsync(todo);
+                        if (updateResult.Status)
                         {
-                            todoModel.Title = todo.Title;
-                            todoModel.Content = todo.Content;
+                            var todoModel = Summary.ToDoList.FirstOrDefault(t => t.Id.Equals(todo.Id));
+                            if (todoModel != null)
+                            {
+                                todoModel.Title = todo.Title;
+                                todoModel.Content = todo.Content;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //新增
+                        var addResult = await toDoService.AddAsync(todo);
+                        if (addResult.Status)
+                        {
+                            Summary.Sum += 1;
+                            Summary.ToDoList.Add(addResult.Result);
+                            Summary.FinishedRatio = (Summary.FinishedCount / (double)Summary.Sum).ToString("0%");
+                            this.RefreshData();
                         }
                     }
                 }
-                else
-                {
-                    //新增
-                    var addResult = await toDoService.AddAsync(todo);
-                    if (addResult.Status)
-                    {
-                        Summary.Sum += 1;
-                        Summary.ToDoList.Add(addResult.Result);
-                        Summary.FinishedRatio = (Summary.FinishedCount / (double)Summary.Sum).ToString("0%");
-                        this.RefreshData();
-                    }
-                }
             }
+            finally { UpdateLoading(false); }
+           
         }
         async void AddMemo(MemoDto memodto)
         {
-            DialogParameters pairs = new DialogParameters();
-            if (memodto != null)
+            try
             {
-                pairs.Add("Value", memodto);
-            }
-            var dialogMemoResult = await service.ShowDialog("AddMemoView", pairs);
-            if (dialogMemoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
-            {
-                var memo = dialogMemoResult.Parameters.GetValue<MemoDto>("Value");
-                if (memo.Id > 0)
+                UpdateLoading(true);
+                DialogParameters pairs = new DialogParameters();
+                if (memodto != null)
                 {
-                    //更新
-                    var updateResult = await memoService.UpdateAsync(memo);
-                    if (updateResult.Status)
+                    pairs.Add("Value", memodto);
+                }
+                var dialogMemoResult = await service.ShowDialog("AddMemoView", pairs);
+                if (dialogMemoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
+                {
+                    var memo = dialogMemoResult.Parameters.GetValue<MemoDto>("Value");
+                    if (memo.Id > 0)
                     {
-                        var memoModel = Summary.MemoList.FirstOrDefault(t => t.Id.Equals(memo.Id));
-                        if (memoModel != null)
+                        //更新
+                        var updateResult = await memoService.UpdateAsync(memo);
+                        if (updateResult.Status)
                         {
-                            memoModel.Title = memo.Title;
-                            memoModel.Content = memo.Content;
+                            var memoModel = Summary.MemoList.FirstOrDefault(t => t.Id.Equals(memo.Id));
+                            if (memoModel != null)
+                            {
+                                memoModel.Title = memo.Title;
+                                memoModel.Content = memo.Content;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //新增
+                        var addResult = await memoService.AddAsync(memo);
+                        if (addResult.Status)
+                        {
+                            Summary.MemoList.Add(addResult.Result);
+                            Summary.MemoCount += 1;
+                            this.RefreshData();
                         }
                     }
                 }
-                else
-                {
-                    //新增
-                    var addResult = await memoService.AddAsync(memo);
-                    if (addResult.Status)
-                    {
-                        Summary.MemoList.Add(addResult.Result);
-                        Summary.MemoCount += 1;
-                        this.RefreshData();
-                    }
-                }
             }
+            finally
+            {
+                UpdateLoading(false);
+            }
+           
         }
         private void Execute(string obj)
         {
