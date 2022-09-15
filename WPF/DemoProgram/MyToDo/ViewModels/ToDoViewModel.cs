@@ -173,6 +173,14 @@ namespace MyToDo.ViewModels
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             base.OnNavigatedTo(navigationContext);
+            if (navigationContext.Parameters.ContainsKey("Status"))
+            {
+             selectedIndex=  navigationContext.Parameters.GetValue<int>("Status");
+            }
+            else
+            {
+                selectedIndex = 0;
+            }
             GetDataAsync();
         }
 

@@ -13,15 +13,18 @@ using MyToDo.Common.Interfaces;
 using Prism.Ioc;
 using MyToDo.Service;
 using Prism.Regions;
+using MyToDo.Extensions;
 
 namespace MyToDo.ViewModels
 {
     public class IndexViewModel : NavigationViewModel
     {
         private readonly IDialogHostService service;
-        private readonly IContainerProvider containerProvider;
+        //private readonly IContainerProvider containerProvider;
         private readonly IToDoService toDoService;
         private readonly IMemoService memoService;
+        private readonly IRegionManager region;
+        private IRegionNavigationJournal Journal;
         private string info;
 
         public string Info
@@ -38,12 +41,28 @@ namespace MyToDo.ViewModels
             this.service = service;
             this.toDoService = containerProvider.Resolve<IToDoService>();
             this.memoService = containerProvider.Resolve<IMemoService>();
-            this.containerProvider = containerProvider;
-
+            //this.containerProvider = containerProvider;
+            this.region = containerProvider.Resolve<IRegionManager>();
             EditToDoCommand = new DelegateCommand<ToDoDto>(AddToDo);
             FinishToDoCommand = new DelegateCommand<ToDoDto>(Finished);
             EditMemoCommand = new DelegateCommand<MemoDto>(AddMemo);
+            NavigateCommand = new DelegateCommand<TaskBar>(Navigate);
 
+        }
+
+        private void Navigate(TaskBar obj)
+        {
+            if (string.IsNullOrWhiteSpace(obj.Target)) return;
+            NavigationParameters pairs = new NavigationParameters();
+
+            if (obj.Title=="已完成")
+            {
+                pairs.Add("Status", 2);
+            }
+            region.Regions[PrismManager.MainViewRegionName].RequestNavigate(obj.Target, back =>
+            {
+                Journal = back.Context.NavigationService.Journal;
+            }, pairs);
         }
 
         private async void Finished(ToDoDto obj)
@@ -55,6 +74,9 @@ namespace MyToDo.ViewModels
                 if (todo!=null)
                 {
                     Summary.ToDoList.Remove(todo);
+                    Summary.FinishedCount += 1;
+                    Summary.FinishedRatio = (Summary.FinishedCount / (double)Summary.Sum).ToString("0%");
+                    this.RefreshData();
                 }
             }
         }
@@ -69,10 +91,10 @@ namespace MyToDo.ViewModels
         void CreateTaskBar()
         {
             TaskBars = new ObservableCollection<TaskBar>();
-            TaskBars.Add(new TaskBar() { Icon = "ClockFast", Title = "汇总", Target = "IndexView", Color = "#FF0CA0FF" });
+            TaskBars.Add(new TaskBar() { Icon = "ClockFast", Title = "汇总", Target = "ToDoView", Color = "#FF0CA0FF" });
             TaskBars.Add(new TaskBar() { Icon = "ClockCheckOutline", Title = "已完成", Target = "ToDoView", Color = "#FF1ECA3A" });
-            TaskBars.Add(new TaskBar() { Icon = "ChartLineVariant", Title = "完成比例", Target = "MemoView", Color = "#FF02C6DC" });
-            TaskBars.Add(new TaskBar() { Icon = "PlaylistStar", Title = "备忘录", Target = "SettingsView", Color = "#FFFFA000" });
+            TaskBars.Add(new TaskBar() { Icon = "ChartLineVariant", Title = "完成比例", Target = "SettingsView", Color = "#FF02C6DC" });
+            TaskBars.Add(new TaskBar() { Icon = "PlaylistStar", Title = "备忘录", Target = "MemoView", Color = "#FFFFA000" });
         }
 
         //private ObservableCollection<ToDoDto> toDoDtos;
@@ -103,6 +125,8 @@ namespace MyToDo.ViewModels
         public DelegateCommand<ToDoDto> EditToDoCommand { get; private set; }
         public DelegateCommand<ToDoDto> FinishToDoCommand { get; private set; }
         public DelegateCommand<MemoDto> EditMemoCommand { get; private set; }
+        public DelegateCommand<TaskBar> NavigateCommand { get; private set; }
+
 
         async void AddToDo(ToDoDto tododto)
         {
@@ -135,7 +159,10 @@ namespace MyToDo.ViewModels
                     var addResult = await toDoService.AddAsync(todo);
                     if (addResult.Status)
                     {
+                        Summary.Sum += 1;
                         Summary.ToDoList.Add(addResult.Result);
+                        Summary.FinishedRatio = (Summary.FinishedCount / (double)Summary.Sum).ToString("0%");
+                        this.RefreshData();
                     }
                 }
             }
@@ -172,6 +199,8 @@ namespace MyToDo.ViewModels
                     if (addResult.Status)
                     {
                         Summary.MemoList.Add(addResult.Result);
+                        Summary.MemoCount += 1;
+                        this.RefreshData();
                     }
                 }
             }
