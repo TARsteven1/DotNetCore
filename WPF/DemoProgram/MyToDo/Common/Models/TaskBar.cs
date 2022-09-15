@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Prism.Mvvm;
 
 namespace MyToDo.Common.Models
 {/// <summary>
 /// 首页中部按钮菜单实体类
 /// </summary>
-   public class TaskBar
+   public class TaskBar:BindableBase
     {
         private string icon;
 
@@ -29,7 +30,7 @@ namespace MyToDo.Common.Models
         public string Count
         {
             get { return count; }
-            set { count = value; }
+            set { count = value;RaisePropertyChanged(); }
         }        
         private string color;
 

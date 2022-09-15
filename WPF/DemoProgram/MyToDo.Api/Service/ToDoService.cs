@@ -5,6 +5,7 @@ using MyToDo.Shared.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace MyToDo.Api.Service
@@ -122,6 +123,34 @@ namespace MyToDo.Api.Service
             catch (Exception ex)
             {
                 return new ApiResponse(ex.Message);
+            }
+        }
+
+        public async Task<ApiResponse> Summary()
+        {
+            try
+            {
+                //拿到待办事项结果
+                var todos = await unitOfWork.GetRepository<ToDo>().GetAllAsync(
+                    orderBy :source => source.OrderByDescending(t => t.CreateTime));
+                //拿到备忘录结果
+                var memos = await unitOfWork.GetRepository<Memo>().GetAllAsync(
+                   orderBy: source => source.OrderByDescending(t => t.CreateTime));
+               //统计部分
+                SummaryDto summary = new SummaryDto();
+                summary.Sum = todos.Count();
+                summary.FinishedCount = todos.Where(t => t.Status == 1).Count();
+                summary.FinishedRatio = (summary.FinishedCount / (double)summary.Sum).ToString("0%");
+                summary.MemoCount = memos.Count();
+                summary.ToDoList = new ObservableCollection<ToDoDto>(mapper.Map<List<ToDoDto>>(todos.Where(t=>t.Status==0)));
+                summary.MemoList = new ObservableCollection<MemoDto>(mapper.Map<List<MemoDto>>(memos));
+
+                return new ApiResponse(true, summary);
+            }
+            catch (Exception)
+            {
+
+                return new ApiResponse(false,"");
             }
         }
 
