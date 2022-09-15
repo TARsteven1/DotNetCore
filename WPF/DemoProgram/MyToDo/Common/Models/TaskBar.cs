@@ -46,5 +46,13 @@ namespace MyToDo.Common.Models
             get { return target; }
             set { target = value; }
         }
+        private int navigateNum;
+
+        public int NavigateNum
+        {
+            get { return navigateNum; }
+            set { navigateNum = value;RaisePropertyChanged(); }
+        }
+
     }
 }

@@ -9,6 +9,7 @@ using Prism.Commands;
 using MyToDo.Common.Models;
 using System.Collections.ObjectModel;
 using MyToDo.Extensions;
+using MyToDo.Views;
 
 namespace MyToDo.ViewModels
 {
@@ -20,6 +21,7 @@ namespace MyToDo.ViewModels
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
             CreateMenuBar();
+
         }
         private ObservableCollection<MenuBar> menuBars;
         private readonly IRegionManager regionManager;

@@ -13,6 +13,7 @@ using Prism.Ioc;
 using Prism.Regions;
 using MyToDo.Common.Interfaces;
 using MyToDo.Extensions;
+using MyToDo.Views;
 
 namespace MyToDo.ViewModels
 {
@@ -29,6 +30,7 @@ namespace MyToDo.ViewModels
 
             SelectedCommand = new DelegateCommand<MemoDto>(Selected);
             DeleteCommand = new DelegateCommand<MemoDto>(Delete);
+
         }
         private async void Delete(MemoDto obj)
         {
@@ -45,6 +47,7 @@ namespace MyToDo.ViewModels
                     {
                         MemoDtos.Remove(model);
                     }
+                    aggregator.SendMessage("已删除!");
                 }
             }
             catch (Exception)

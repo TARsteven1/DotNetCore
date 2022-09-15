@@ -123,6 +123,7 @@
                 <ListBox
                     x:Name="todoList"
                     HorizontalContentAlignment="Stretch"
+					MaxWidth="600"
                     ItemsSource="{Binding Summary.ToDoList}"
                     ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <i:Interaction.Triggers>
@@ -182,7 +183,7 @@
                     </Button>
                 </DockPanel>
                 <ListBox
-                    x:Name="memoList"
+                    x:Name="memoList" MaxWidth="600"
                     ItemsSource="{Binding Summary.MemoList}"
                     ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <i:Interaction.Triggers>
@@ -192,7 +193,7 @@
                     </i:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel MaxHeight="80">
+                            <StackPanel MaxHeight="80" MaxWidth="50" >
                                 <TextBlock
                                     FontSize="16"
                                     FontWeight="Bold"

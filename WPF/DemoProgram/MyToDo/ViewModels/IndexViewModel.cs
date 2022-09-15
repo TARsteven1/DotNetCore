@@ -14,6 +14,7 @@ using Prism.Ioc;
 using MyToDo.Service;
 using Prism.Regions;
 using MyToDo.Extensions;
+using MyToDo.Views;
 
 namespace MyToDo.ViewModels
 {
@@ -61,6 +62,7 @@ namespace MyToDo.ViewModels
             }
             region.Regions[PrismManager.MainViewRegionName].RequestNavigate(obj.Target, back =>
             {
+                MainView.listBox.SelectedIndex = obj.NavigateNum;
                 Journal = back.Context.NavigationService.Journal;
             }, pairs);
         }
@@ -106,10 +108,10 @@ namespace MyToDo.ViewModels
         void CreateTaskBar()
         {
             TaskBars = new ObservableCollection<TaskBar>();
-            TaskBars.Add(new TaskBar() { Icon = "ClockFast", Title = "汇总", Target = "ToDoView", Color = "#FF0CA0FF" });
-            TaskBars.Add(new TaskBar() { Icon = "ClockCheckOutline", Title = "已完成", Target = "ToDoView", Color = "#FF1ECA3A" });
-            TaskBars.Add(new TaskBar() { Icon = "ChartLineVariant", Title = "完成比例", Target = "SettingsView", Color = "#FF02C6DC" });
-            TaskBars.Add(new TaskBar() { Icon = "PlaylistStar", Title = "备忘录", Target = "MemoView", Color = "#FFFFA000" });
+            TaskBars.Add(new TaskBar() { Icon = "ClockFast", Title = "汇总", Target = "ToDoView", Color = "#FF0CA0FF", NavigateNum=1 });
+            TaskBars.Add(new TaskBar() { Icon = "ClockCheckOutline", Title = "已完成", Target = "ToDoView", Color = "#FF1ECA3A", NavigateNum = 1 });
+            TaskBars.Add(new TaskBar() { Icon = "ChartLineVariant", Title = "完成比例", Target = "SettingsView", Color = "#FF02C6DC", NavigateNum = 3});
+            TaskBars.Add(new TaskBar() { Icon = "PlaylistStar", Title = "备忘录", Target = "MemoView", Color = "#FFFFA000", NavigateNum = 2});
         }
 
         //private ObservableCollection<ToDoDto> toDoDtos;
@@ -145,9 +147,7 @@ namespace MyToDo.ViewModels
 
         async void AddToDo(ToDoDto tododto)
         {
-            try
-            {
-                UpdateLoading(true);
+           
                 DialogParameters pairs = new DialogParameters();
                 if (tododto != null)
                 {
@@ -156,6 +156,9 @@ namespace MyToDo.ViewModels
                 var dialogToDoResult = await service.ShowDialog("AddToDoView", pairs);
                 if (dialogToDoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
                 {
+                try
+                {
+                    UpdateLoading(true);
                     var todo = dialogToDoResult.Parameters.GetValue<ToDoDto>("Value");
                     if (todo.Id > 0)
                     {
@@ -184,15 +187,12 @@ namespace MyToDo.ViewModels
                         }
                     }
                 }
+                finally { UpdateLoading(false); }
             }
-            finally { UpdateLoading(false); }
-           
         }
         async void AddMemo(MemoDto memodto)
         {
-            try
-            {
-                UpdateLoading(true);
+            
                 DialogParameters pairs = new DialogParameters();
                 if (memodto != null)
                 {
@@ -201,6 +201,9 @@ namespace MyToDo.ViewModels
                 var dialogMemoResult = await service.ShowDialog("AddMemoView", pairs);
                 if (dialogMemoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
                 {
+                try
+                {
+                    UpdateLoading(true);
                     var memo = dialogMemoResult.Parameters.GetValue<MemoDto>("Value");
                     if (memo.Id > 0)
                     {
@@ -228,12 +231,11 @@ namespace MyToDo.ViewModels
                         }
                     }
                 }
+                finally
+                {
+                    UpdateLoading(false);
+                }
             }
-            finally
-            {
-                UpdateLoading(false);
-            }
-           
         }
         private void Execute(string obj)
         {
@@ -251,20 +253,30 @@ namespace MyToDo.ViewModels
 
         public override async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            var summaryResult = await toDoService.SummaryAsync();
-            if (summaryResult.Status)
+            try
             {
-                Summary = summaryResult.Result;
-                RefreshData();
-            }
+                UpdateLoading(true);
+                var summaryResult = await toDoService.SummaryAsync();
+                if (summaryResult.Status)
+                {
+                    Summary = summaryResult.Result;
+                    RefreshData();
+                }
             base.OnNavigatedTo(navigationContext);
+            }
+            finally
+            {
+                UpdateLoading(false);
+            }
+            
         }
         void RefreshData()
         {
-            taskBars[0].Count = summary.Sum.ToString();
-            taskBars[1].Count = summary.FinishedCount.ToString();
-            taskBars[2].Count = summary.FinishedRatio;
-            taskBars[3].Count = summary.MemoCount.ToString();
+                taskBars[0].Count = summary.Sum.ToString();
+                taskBars[1].Count = summary.FinishedCount.ToString();
+                taskBars[2].Count = summary.FinishedRatio;
+                taskBars[3].Count = summary.MemoCount.ToString();
+           
         }
     }
 }

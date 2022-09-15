@@ -57,7 +57,9 @@
                     <ListBox
                         x:Name="menuBar"
                         ItemContainerStyle="{StaticResource MyListBoxItemStyle}"
-                        ItemsSource="{Binding MenuBars}">
+                        ItemsSource="{Binding MenuBars}"
+						>
+						<!--SelectedIndex="0"-->
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding ElementName=menuBar, Path=SelectedItem}" />
@@ -154,7 +156,7 @@
                         <!--</Grid>-->
                     </DockPanel>
                 </materialDesign:ColorZone>
-                <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
+				<ContentControl Grid.Row="1"   prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
             </Grid>
             <!--</DockPanel>-->
         </materialDesign:DrawerHost>

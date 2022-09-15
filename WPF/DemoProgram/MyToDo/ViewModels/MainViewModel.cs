@@ -10,19 +10,22 @@ using Prism.Commands;
 using MyToDo.Common.Models;
 using MyToDo.Extensions;
 using MyToDo.Common.Interfaces;
+using System.Windows.Controls;
+using MyToDo.Views;
 
 namespace MyToDo.ViewModels
 {
     public class MainViewModel : BindableBase, IConfigureService
     {
+        //public static ListBox listBox;
         public MainViewModel(IRegionManager regionManager )
         {
             MenuBars = new ObservableCollection<MenuBar>();
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
 
-            GoBackCommand = new DelegateCommand(() => { if (Journal!=null&&Journal.CanGoBack) Journal.GoBack(); });
-            GoForwardCommand = new DelegateCommand(() => { if (Journal != null && Journal.CanGoForward) Journal.GoForward(); });
+            GoBackCommand = new DelegateCommand(() => { if (Journal!=null&&Journal.CanGoBack) Journal.GoBack(); MainView.listBox.SelectedItem = null; });
+            GoForwardCommand = new DelegateCommand(() => { if (Journal != null && Journal.CanGoForward) Journal.GoForward(); MainView.listBox.SelectedItem = null; });
             //Navigate(MenuBars[0]);
         }
 
@@ -63,5 +66,30 @@ namespace MyToDo.ViewModels
             CreateMenuBar();
             regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
         }
+        //private int navigateNum;
+
+        //public int NavigateNum
+        //{
+        //    get {
+        //        //我想访问指定区域,根据区域的view名称判断索引值,失败:我不会访问区域
+        //        var ViewName = regionManager.Regions[PrismManager.MainViewRegionName].ActiveViews.ToString();
+                
+        //        switch (ViewName)
+        //        {
+        //            case "IndexView":
+        //                navigateNum= 0;break;                
+        //            case "ToDoView":
+        //                navigateNum= 1;break;                  
+        //            case "MemoView":
+        //                navigateNum= 2;break;                 
+        //            case "SettingView":
+        //                navigateNum= 3;break;
+        //            default:
+        //                break;
+        //        }
+        //        return navigateNum; }
+        //    set { navigateNum = value;  RaisePropertyChanged(); }
+        //}
+
     }
 }

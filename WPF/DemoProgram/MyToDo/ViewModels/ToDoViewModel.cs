@@ -13,6 +13,7 @@ using Prism.Ioc;
 using Prism.Regions;
 using MyToDo.Common.Interfaces;
 using MyToDo.Extensions;
+using MyToDo.Views;
 
 namespace MyToDo.ViewModels
 {
@@ -29,6 +30,7 @@ namespace MyToDo.ViewModels
             //CreateToDoList();
             SelectedCommand = new DelegateCommand<ToDoDto>(Selected);
             DeleteCommand = new DelegateCommand<ToDoDto>(Delete);
+
         }
 
         private async void Delete(ToDoDto obj)
@@ -47,6 +49,7 @@ namespace MyToDo.ViewModels
                     {
                         ToDoDtos.Remove(model);
                     }
+                    aggregator.SendMessage("已删除!");
                 }
             }
             catch (Exception)
@@ -97,6 +100,7 @@ namespace MyToDo.ViewModels
                             todo.Content = CurrentDto.Content;
                             todo.Status = CurrentDto.Status;
                         }
+                        aggregator.SendMessage("编辑成功!");
                     }
                     IsRightDrawerOpen = false;
                 }
@@ -108,6 +112,7 @@ namespace MyToDo.ViewModels
                         ToDoDtos.Add(newResult.Result);
                         IsRightDrawerOpen = false;
                     }
+                    aggregator.SendMessage("添加成功!");
                 }
             }
             catch (Exception)

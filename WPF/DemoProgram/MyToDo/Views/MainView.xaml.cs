@@ -24,6 +24,7 @@ namespace MyToDo.Views
     /// </summary>
     public partial class MainView : Window
     {
+        public static ListBox listBox;
         public MainView(IEventAggregator aggregator, IDialogHostService dialogHost)
         {
             InitializeComponent();
@@ -65,6 +66,7 @@ namespace MyToDo.Views
             };
             //点击左侧导航后自动收缩导航
             menuBar.SelectionChanged += (s, e) => { NavDrawer.IsLeftDrawerOpen = false; };
+            listBox = menuBar;
         }
     }
 }
