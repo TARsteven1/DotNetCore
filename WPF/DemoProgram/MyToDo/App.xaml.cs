@@ -18,6 +18,7 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 
 namespace MyToDo
 {
@@ -33,12 +34,22 @@ namespace MyToDo
         }
         protected override void OnInitialized()
         {
-           var service= App.Current.MainWindow.DataContext as IConfigureService;
-            if (service!=null)
-            {
-                service.Configure();
-            }
-            base.OnInitialized();
+
+          var dialog=  Container.Resolve<IDialogService>();
+            dialog.ShowDialog("LoginView",callback=> {
+                if (callback.Result!=ButtonResult.OK)
+                {
+                    Application.Current.Shutdown();
+                    return;
+                }
+                var service = App.Current.MainWindow.DataContext as IConfigureService;
+                if (service != null)
+                {
+                    service.Configure();
+                }
+                base.OnInitialized();
+            });
+           
 
         }
         //使用容器的类型注册器来注册我们要使用的页面，依赖或者服务
@@ -63,6 +74,8 @@ namespace MyToDo
             containerRegistry.RegisterForNavigation<AddToDoView, AddToDoViewModel>();
             containerRegistry.RegisterForNavigation<AddMemoView, AddMemoViewModel>();
             containerRegistry.Register<IDialogHostService, DialogHostService>();
+
+            containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
 
         }
 

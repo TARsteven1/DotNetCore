@@ -4,10 +4,13 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon />
+    <Win32Resource />
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resource\Head\head.jpg" />
+    <None Remove="Resource\Login.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +30,10 @@
   <ItemGroup>
     <ProjectReference Include="..\MyToDo.Api\MyToDo.Api.csproj" />
     <ProjectReference Include="..\MyToDo.Shared\MyToDo.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\Login.png" />
   </ItemGroup>
 
 </Project>
