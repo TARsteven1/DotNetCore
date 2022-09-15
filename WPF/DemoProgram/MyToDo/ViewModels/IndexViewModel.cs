@@ -40,7 +40,25 @@ namespace MyToDo.ViewModels
             this.toDoService = containerProvider.Resolve<IToDoService>();
             this.memoService = containerProvider.Resolve<IMemoService>();
             this.containerProvider = containerProvider;
+
+            EditToDoCommand = new DelegateCommand<ToDoDto>(AddToDo);
+            FinishToDoCommand = new DelegateCommand<ToDoDto>(Finished);
+            EditMemoCommand = new DelegateCommand<MemoDto>(AddMemo);
         }
+
+        private async void Finished(ToDoDto obj)
+        {
+          var updateResult=await toDoService.UpdateAsync(obj);
+            if (updateResult.Status)
+            {
+              var todo=  ToDoDtos.FirstOrDefault(t => t.Id.Equals(obj.Id));
+                if (todo!=null)
+                {
+                    ToDoDtos.Remove(todo);
+                }
+            }
+        }
+
         private ObservableCollection<TaskBar> taskBars;
 
         public ObservableCollection<TaskBar> TaskBars
@@ -72,56 +90,95 @@ namespace MyToDo.ViewModels
             set { memoDtos = value; RaisePropertyChanged(); }
         }
         public DelegateCommand<string> ExecuteCommand { private set; get; }
-        
+        public DelegateCommand<ToDoDto> EditToDoCommand { get; private set; }
+        public DelegateCommand<ToDoDto> FinishToDoCommand { get; private set; }
+        public DelegateCommand<MemoDto> EditMemoCommand { get; private set; }
 
-        private async void Execute(string obj)
+        async void AddToDo(ToDoDto tododto)
+        {
+            DialogParameters pairs = new DialogParameters();
+            if (tododto!=null)
+            {
+                pairs.Add("Value", tododto);
+            }
+            var dialogToDoResult = await service.ShowDialog("AddToDoView", pairs);
+            if (dialogToDoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
+            {
+                var todo = dialogToDoResult.Parameters.GetValue<ToDoDto>("Value");
+                if (todo.Id > 0)
+                {
+                    //更新
+               var updateResult=await toDoService.UpdateAsync(todo);
+                    if (updateResult.Status)
+                    {
+                       var todoModel= ToDoDtos.FirstOrDefault(t => t.Id.Equals(todo.Id));
+                        if (todoModel!=null)
+                        {
+                            todoModel.Title = todo.Title;
+                            todoModel.Content = todo.Content;
+                        }
+                    }
+                }
+                else
+                {
+                    //新增
+                    var addResult = await toDoService.AddAsync(todo);
+                    if (addResult.Status)
+                    {
+                        ToDoDtos.Add(addResult.Result);
+                    }
+                }
+            }
+        }
+        async void AddMemo(MemoDto memodto)
+        {
+            DialogParameters pairs = new DialogParameters();
+            if (memodto != null)
+            {
+                pairs.Add("Value", memodto);
+            }
+            var dialogMemoResult = await service.ShowDialog("AddMemoView", pairs);
+            if (dialogMemoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
+            {
+                var memo = dialogMemoResult.Parameters.GetValue<MemoDto>("Value");
+                if (memo.Id > 0)
+                {
+                    //更新
+                    var updateResult = await memoService.UpdateAsync(memo);
+                    if (updateResult.Status)
+                    {
+                        var memoModel = MemoDtos.FirstOrDefault(t => t.Id.Equals(memo.Id));
+                        if (memoModel != null)
+                        {
+                            memoModel.Title = memo.Title;
+                            memoModel.Content = memo.Content;
+                        }
+                    }
+                }
+                else
+                {
+                    //新增
+                    var addResult = await memoService.AddAsync(memo);
+                    if (addResult.Status)
+                    {
+                        MemoDtos.Add(addResult.Result);
+                    }
+                }
+            }
+        }
+        private void Execute(string obj)
         {
             switch (obj)
             {
                 case "AddToDo":
-                    var dialogToDoResult = await service.ShowDialog("AddToDoView", null);
-                    if (dialogToDoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
-                    {
-                        var todo = dialogToDoResult.Parameters.GetValue<ToDoDto>("Value");
-                        if (todo.Id > 0)
-                        {
-                            //更新
-                        }
-                        else
-                        {
-                            //新增
-                            var addResult = await toDoService.AddAsync(todo);
-                            if (addResult.Status)
-                            {
-                                ToDoDtos.Add(addResult.Result);
-                            }
-                        }
-                    }
+                    AddToDo(null);
                     break;
                 case "AddMemo":
-                    var dialogMemoResult = await service.ShowDialog("AddMemoView", null);
-                    if (dialogMemoResult.Result == Prism.Services.Dialogs.ButtonResult.OK)
-                    {
-                        var memo = dialogMemoResult.Parameters.GetValue<MemoDto>("Value");
-                        if (memo.Id > 0)
-                        {
-                            //更新
-                        }
-                        else
-                        {
-                            //新增
-                            var addResult = await memoService.AddAsync(memo);
-                            if (addResult.Status)
-                            {
-                                MemoDtos.Add(addResult.Result);
-                            }
-                        }
-                    }
+                    AddMemo(null);
                     break;
-
-                default:
-                    break;
+             
             }
         }
+
     }
 }

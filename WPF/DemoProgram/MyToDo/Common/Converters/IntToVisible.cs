@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace MyToDo.Common.Converters
 {
-    public class IntToBool : IValueConverter
+    public class IntToVisible : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -17,24 +17,15 @@ namespace MyToDo.Common.Converters
             {
                 if (result==0)
                 {
-                    return false;
+                    return Visibility.Visible;
                 }
             }
-            return true;
-
+            return Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null && bool.TryParse(value.ToString(), out bool result))
-            {
-                if (result)
-                {
-                    return 1;
-                }
-            }
-            return 0;
-
+            throw new NotImplementedException();
         }
     }
 }
