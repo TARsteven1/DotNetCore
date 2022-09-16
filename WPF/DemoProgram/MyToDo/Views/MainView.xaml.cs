@@ -30,7 +30,7 @@ namespace MyToDo.Views
             InitializeComponent();
             //注册提示消息
             aggregator.RegisterMessage(arg => {
-                SnackBar.MessageQueue.Enqueue(arg);
+                SnackBar.MessageQueue.Enqueue(arg.Message);
             });
             
             //注册等待消息窗口

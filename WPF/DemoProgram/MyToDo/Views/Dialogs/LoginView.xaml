@@ -29,7 +29,9 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Image Margin="20" Source="/Resource/Login.png" />
-        <materialDesign:Transitioner Grid.Column="1" SelectedIndex="{Binding SelectedIndex}">
+		<materialDesign:Snackbar x:Name="LoginSnackbar" Panel.ZIndex="1" MessageQueue="{materialDesign:MessageQueue}"
+								 Grid.ColumnSpan="2"/>
+		<materialDesign:Transitioner Grid.Column="1" SelectedIndex="{Binding SelectedIndex}">
             <materialDesign:TransitionerSlide>
                 <DockPanel
                     Grid.Column="1"

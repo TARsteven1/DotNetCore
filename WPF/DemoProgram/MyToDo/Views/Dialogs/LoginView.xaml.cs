@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using MyToDo.Extensions;
 using System.Windows.Shapes;
 
 namespace MyToDo.Views.Dialogs
@@ -20,9 +22,16 @@ namespace MyToDo.Views.Dialogs
     /// </summary>
     public partial class LoginView : UserControl
     {
-        public LoginView()
+        private readonly IEventAggregator eventAggregator;
+
+        public LoginView(IEventAggregator eventAggregator)
         {
             InitializeComponent();
+            this.eventAggregator = eventAggregator;
+            //注册消息提示
+            eventAggregator.RegisterMessage(arg=> {
+                LoginSnackbar.MessageQueue.Enqueue(arg.Message);
+            },"Login");
         }
     }
 }

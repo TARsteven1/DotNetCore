@@ -38,15 +38,20 @@ namespace MyToDo.Extensions
             //注册等待消息
             aggregator.GetEvent<UpdateLoadingEvent>().Subscribe(action);
         }        
-        public static void RegisterMessage(this IEventAggregator aggregator,Action<string> action)
+        public static void RegisterMessage(this IEventAggregator aggregator,Action<MessageModel> action,string filterName="Main")
         {
-            //注册提示消息事件
-            aggregator.GetEvent<MessageEvent>().Subscribe(action);
+            //注册提示消息事件(添加注册消息时的过滤器)
+            aggregator.GetEvent<MessageEvent>().Subscribe(action,ThreadOption.PublisherThread,true,(m)=> {
+                return m.Filter.Equals(filterName);
+            });
         }        
-        public static void SendMessage(this IEventAggregator aggregator,string message)
+        public static void SendMessage(this IEventAggregator aggregator,string message,string filterName = "Main")
         {
-            //注册提示消息事件
-            aggregator.GetEvent<MessageEvent>().Publish(message);
+            //注册提示消息事件(发送消息默认发送到首页)
+            aggregator.GetEvent<MessageEvent>().Publish(new MessageModel() { 
+            Filter= filterName,
+            Message= message
+            });
         }
 
 
