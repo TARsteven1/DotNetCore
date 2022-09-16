@@ -126,9 +126,10 @@ namespace MyToDo.ViewModels.Dialogs
             var loginResult =await service.LoginAsync(new Shared.Dtos.UserDto()
             {
                 Account=Account,
-                PassWord=PassWord
+                PassWord=PassWord,
+                UserName=UserName
             });
-            if (loginResult.Status)
+            if (loginResult!=null&&loginResult.Status)
             {
                 AppSession.UserName = loginResult.Result.UserName;
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));

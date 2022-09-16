@@ -24,8 +24,8 @@ namespace MyToDo.ViewModels
 
         public string UserName
         {
-            get { return userName; }
-            set { userName = value; }
+            get { return userName;  }
+            set { userName = value; RaisePropertyChanged(); }
         }
         public MainViewModel(IRegionManager regionManager , IContainerProvider Container)
         {
@@ -38,6 +38,7 @@ namespace MyToDo.ViewModels
             LoginOutCommand = new DelegateCommand(()=>
             {
                 //注销操作
+                AppSession.UserName = null;
                 App.LoginOut(Container);
             });
         }
@@ -78,10 +79,10 @@ namespace MyToDo.ViewModels
         //配置首页初始化参数
         public void Configure()
         {
-            CreateMenuBar();
-            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
             UserName = AppSession.UserName;
             MenuBars = new ObservableCollection<MenuBar>();
+            CreateMenuBar();
+            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
 
 
         }
