@@ -53,7 +53,7 @@ namespace MyToDo.Extensions
             string newPassword = PassWordExtensions.GetPassWord(passwordBox);
             if (passwordBox!=null && passwordBox.Password!= newPassword)
             {
-                PassWordExtensions.SetPassWord(passwordBox, newPassword);
+                PassWordExtensions.SetPassWord(passwordBox, passwordBox.Password);
             }
         }
 

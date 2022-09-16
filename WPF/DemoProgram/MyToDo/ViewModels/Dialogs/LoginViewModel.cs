@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using Prism.Commands;
 using Prism.Services.Dialogs;
 using MyToDo.Service;
+using MyToDo.Shared.Dtos;
 
 namespace MyToDo.ViewModels.Dialogs
 {
@@ -45,6 +46,7 @@ namespace MyToDo.ViewModels.Dialogs
         {
             ExecuteCommand = new DelegateCommand<string>(Execute);
             this.service = service;
+            RegisterDto = new RegisterDto();
         }
 
         private void Execute(string obj)
@@ -54,10 +56,41 @@ namespace MyToDo.ViewModels.Dialogs
                 case "Login":
                     Login();break;           
                 case "LoginOut":
-                    LoginOut();break;
+                    LoginOut();break;              
+                        case "Go":
+                    SelectedIndex=1; break;        
+                case "Register":
+                    Register(); break;              
+                        case "Back":
+                    SelectedIndex=0;break;
                 default:
                     break;
             }
+        }
+        private RegisterDto registerDto;
+        public RegisterDto RegisterDto { get => registerDto; set { registerDto = value; RaisePropertyChanged(); } }
+
+        private async void Register()
+        {
+            if (string.IsNullOrEmpty(RegisterDto.Account)||string.IsNullOrEmpty(RegisterDto.UserName) || string.IsNullOrEmpty(RegisterDto.PassWord) || string.IsNullOrEmpty(RegisterDto.NewPassWord))
+            {
+                return;//输入内容不合法
+            }
+            if (RegisterDto.PassWord!= RegisterDto.NewPassWord)
+            {
+                return;//两次输入的密码不一致
+            }
+           var registerResult= await service.Register(new Shared.Dtos.UserDto() {
+           Account= RegisterDto.Account,
+           UserName = RegisterDto.UserName,
+           PassWord = RegisterDto.PassWord
+            });
+            if (registerResult.Status && registerResult!=null)
+            {
+                selectedIndex = 0;
+            }
+            //注册失败
+
         }
 
         private void LoginOut()
@@ -84,5 +117,13 @@ namespace MyToDo.ViewModels.Dialogs
             //登录失败提示
 
         }
+        private int selectedIndex;
+
+        public int SelectedIndex
+        {
+            get { return selectedIndex; }
+            set { selectedIndex = value; RaisePropertyChanged(); }
+        }
+
     }
 }
