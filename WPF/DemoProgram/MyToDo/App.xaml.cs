@@ -70,10 +70,11 @@ namespace MyToDo
             //注册服务
             containerRegistry.Register<IToDoService,ToDoService>();
             containerRegistry.Register<IMemoService, MemoService>();
+            containerRegistry.Register<IDialogHostService, DialogHostService>();
+            containerRegistry.Register<ILoginService, LoginService>();
 
             containerRegistry.RegisterForNavigation<AddToDoView, AddToDoViewModel>();
             containerRegistry.RegisterForNavigation<AddMemoView, AddMemoViewModel>();
-            containerRegistry.Register<IDialogHostService, DialogHostService>();
 
             containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
 
