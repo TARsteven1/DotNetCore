@@ -15,6 +15,7 @@ using MyToDo.Service;
 using Prism.Regions;
 using MyToDo.Extensions;
 using MyToDo.Views;
+using MyToDo.Common.User;
 
 namespace MyToDo.ViewModels
 {
@@ -30,7 +31,7 @@ namespace MyToDo.ViewModels
 
         public string Info
         {
-            get { return "今天是" + System.DateTime.Now.ToString("yyyy-MM-dd") + " " + System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek); }
+            get { return $"你好!{AppSession.UserName},今天是" + System.DateTime.Now.ToString("yyyy-MM-dd") + " " + System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek); }
             set { info = value; RaisePropertyChanged(); }
         }
         public IndexViewModel(IContainerProvider containerProvider,IDialogHostService service) : base(containerProvider)

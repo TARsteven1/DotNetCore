@@ -12,21 +12,34 @@ using MyToDo.Extensions;
 using MyToDo.Common.Interfaces;
 using System.Windows.Controls;
 using MyToDo.Views;
+using MyToDo.Common.User;
+using Prism.Ioc;
 
 namespace MyToDo.ViewModels
 {
     public class MainViewModel : BindableBase, IConfigureService
     {
         //public static ListBox listBox;
-        public MainViewModel(IRegionManager regionManager )
+        private string userName;
+
+        public string UserName
         {
-            MenuBars = new ObservableCollection<MenuBar>();
+            get { return userName; }
+            set { userName = value; }
+        }
+        public MainViewModel(IRegionManager regionManager , IContainerProvider Container)
+        {
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             this.regionManager = regionManager;
-
+            container = Container;
             GoBackCommand = new DelegateCommand(() => { if (Journal!=null&&Journal.CanGoBack) Journal.GoBack(); MainView.listBox.SelectedItem = null; });
             GoForwardCommand = new DelegateCommand(() => { if (Journal != null && Journal.CanGoForward) Journal.GoForward(); MainView.listBox.SelectedItem = null; });
             //Navigate(MenuBars[0]);
+            LoginOutCommand = new DelegateCommand(()=>
+            {
+                //注销操作
+                App.LoginOut(Container);
+            });
         }
 
         private ObservableCollection<MenuBar> menuBars;
@@ -46,11 +59,13 @@ namespace MyToDo.ViewModels
         }
 
         private readonly IRegionManager regionManager;
+        private readonly IContainerProvider container;
         private IRegionNavigationJournal Journal;
 
         public DelegateCommand<MenuBar> NavigateCommand { private set; get; }
         public DelegateCommand GoBackCommand { private set; get; }
         public DelegateCommand GoForwardCommand { private set; get; }
+        public DelegateCommand LoginOutCommand { private set; get; }
         private void Navigate(MenuBar obj)
         {
             if (obj == null || string.IsNullOrWhiteSpace(obj.NameSpace)) return;
@@ -65,6 +80,10 @@ namespace MyToDo.ViewModels
         {
             CreateMenuBar();
             regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
+            UserName = AppSession.UserName;
+            MenuBars = new ObservableCollection<MenuBar>();
+
+
         }
         //private int navigateNum;
 
@@ -73,7 +92,7 @@ namespace MyToDo.ViewModels
         //    get {
         //        //我想访问指定区域,根据区域的view名称判断索引值,失败:我不会访问区域
         //        var ViewName = regionManager.Regions[PrismManager.MainViewRegionName].ActiveViews.ToString();
-                
+
         //        switch (ViewName)
         //        {
         //            case "IndexView":

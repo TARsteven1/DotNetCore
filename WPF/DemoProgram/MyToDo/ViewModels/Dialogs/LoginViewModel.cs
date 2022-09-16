@@ -10,6 +10,7 @@ using Prism.Services.Dialogs;
 using MyToDo.Service;
 using MyToDo.Shared.Dtos;
 using MyToDo.Extensions;
+using MyToDo.Common.User;
 
 namespace MyToDo.ViewModels.Dialogs
 {
@@ -129,6 +130,7 @@ namespace MyToDo.ViewModels.Dialogs
             });
             if (loginResult.Status)
             {
+                AppSession.UserName = loginResult.Result.UserName;
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
                 eventAggregator.SendMessage("登陆成功!", "Login");
                 return;

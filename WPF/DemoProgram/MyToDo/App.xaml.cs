@@ -32,6 +32,20 @@ namespace MyToDo
             //使用官方提供的容器拿到主窗口并返回
             return Container.Resolve<MainView>();
         }
+        public static void LoginOut(IContainerProvider Container)
+        {
+            Current.MainWindow.Hide();
+            var dialog = Container.Resolve<IDialogService>();
+            dialog.ShowDialog("LoginView", callback => {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    Environment.Exit(0);
+                    return;
+                }
+            Current.MainWindow.Show();
+
+            });
+        }
         protected override void OnInitialized()
         {
 
@@ -39,7 +53,8 @@ namespace MyToDo
             dialog.ShowDialog("LoginView",callback=> {
                 if (callback.Result!=ButtonResult.OK)
                 {
-                    Application.Current.Shutdown();
+                    //Application.Current.Shutdown();
+                    Environment.Exit(0);
                     return;
                 }
                 var service = App.Current.MainWindow.DataContext as IConfigureService;

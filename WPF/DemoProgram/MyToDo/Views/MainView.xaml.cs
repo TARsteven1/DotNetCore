@@ -25,6 +25,8 @@ namespace MyToDo.Views
     public partial class MainView : Window
     {
         public static ListBox listBox;
+
+
         public MainView(IEventAggregator aggregator, IDialogHostService dialogHost)
         {
             InitializeComponent();
