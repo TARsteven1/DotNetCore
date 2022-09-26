@@ -17,8 +17,8 @@ namespace WpfAppBasical
             //Task.Run(async() =>{ 
             //    await Task.Delay(1500);
             //    Code = "com"; });
-
-            command = new RelayCommand(() => { Code = "com"; });
+            //propDp = new propdpClass();
+            command = new RelayCommand(() => { Code = "com"; propDp.MyValue = "v"; });
         }
         //public string Code { set; get; }
         private string code;
@@ -44,5 +44,17 @@ namespace WpfAppBasical
         //        PropertyChanged(this, new PropertyChangedEventArgs(propertyname));
         //    }
         //}
+
+        //声明一个依赖对象属性并实例化提供UI绑定
+        private propdpClass propdp = new propdpClass();
+        public propdpClass propDp
+        {
+            get { return propdp; }
+            set
+            {
+                propdp = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

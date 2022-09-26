@@ -274,9 +274,10 @@
 						<!--事件驱动-->
 						<Slider Width="200" ValueChanged="Slider_ValueChanged" />
 						<TextBox FontSize="30" Height="30" Name="txt"/>
-						<!--数据驱动(元素绑定)-->
+						<!--数据驱动(元素绑定),绑定模式分为单次绑定，（反）单向，双向绑定，默认为双向绑定-->
 						<Slider Width="200" x:Name="sd" />
-						<TextBox Background="Pink" FontSize="30" Height="30" Text="{Binding ElementName=sd ,Path=Value}"/>
+						<TextBox Background="Pink" FontSize="30" Height="30" Text="{Binding  ElementName=sd ,Path=Value,Mode=Default}"/>
+                        <!--Text="{Binding Value, ElementName=sd,Mode=Default}" 另一种写法绑定对象的指定属性（Value）Height等-->
 						<!--绑定数据源-->
 						<TextBox Text="{Binding Source={StaticResource txt},Path=Text}"/>
 						<!--使用DataContext绑定数据-->
@@ -284,8 +285,10 @@
 
 						<TextBox Text="{Binding Code ,UpdateSourceTrigger=PropertyChanged}"/>
 						<Button Command="{Binding command}" Content="修改数据" Width="200"/>
-					</StackPanel>
-				</Grid>
+                        <!--使用依赖属性进行数据绑定-->
+                        <TextBox Text="{Binding propDp.MyValue}"/>
+                    </StackPanel>
+                </Grid>
 			</TabItem>
 		</TabControl>
 	</StackPanel>
