@@ -42,9 +42,27 @@ namespace ThreadTest
             Console.WriteLine(Thread.CurrentThread);
             //线程的状态
             Console.WriteLine(thread.ThreadState);
+        }
 
+        static void Block()
+        {
+            Thread thread = new Thread(WriteY);
+            //由于线程状态是flag 枚举，所以：
+            //判断线程的状态是否为等待，要这样写
+            if ((thread.ThreadState | ThreadState.WaitSleepJoin )!= 0)
+            {
+                Console.WriteLine("thread的状态为阻塞");
+            }
 
-
+        }
+       /// <summary>
+       /// 判断传入的线程状态并返回
+       /// </summary>
+       /// <param name="ts"></param>
+       /// <returns></returns>
+        public static ThreadState SimpleThreadState(ThreadState ts)
+        {
+            return ts & (ThreadState.Stopped | ThreadState.Unstarted | ThreadState.WaitSleepJoin);
         }
     }
 }
